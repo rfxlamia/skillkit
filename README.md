@@ -96,7 +96,7 @@ The `skillkit` skill is the engine that powers creation of new skills and subage
 ### As a Claude Code Plugin
 
 ```bash
-claude plugin add rfxlamia/claude-skillkit
+claude plugin marketplace add rfxlamia/claude-skillkit
 ```
 
 ### Manual Installation
