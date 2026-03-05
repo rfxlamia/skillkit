@@ -1,7 +1,7 @@
 {
   "name": "claude-skillkit",
-  "description": "Professional skill creation with research-driven workflow and automated validation. Features 12-step workflow, 9 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.",
-  "version": "1.3.0",
+  "description": "Professional skill creation with TDD workflow. Features dual-mode (fast/full), behavioral validation, and automated quality gates for 9.0/10+ scores.",
+  "version": "2.0.0",
   "author": {
     "name": "rfxlamia",
     "email": "rfxlamia@github.com"
@@ -19,6 +19,9 @@
     "anti-hallucination",
     "testing",
     "security",
-    "token-optimization"
+    "token-optimization",
+    "tdd",
+    "behavioral-testing",
+    "pressure-testing"
   ]
 }
