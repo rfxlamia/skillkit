@@ -164,6 +164,16 @@ def main() -> int:
     pressure_type = PressureType(args.pressure)
     skill_type = SkillType(args.skill_type)
 
+    # v2 behavior is intentionally stubbed; emit explicit warning for operators.
+    print(
+        "Warning: pressure_tester is running in v2 stub mode (mock compliance scoring).",
+        file=sys.stderr,
+    )
+    print(
+        "Real subagent-based pressure execution is planned for v2.1.",
+        file=sys.stderr,
+    )
+
     if pressure_type == PressureType.COMBINED:
         result = tester.run_combined_pressure(args.skill_path, skill_type)
     else:
