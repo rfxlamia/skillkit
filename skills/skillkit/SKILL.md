@@ -148,11 +148,11 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
 **Step-by-step workflow (REQUIRED):**
 
 ```bash
-# STEP 1: Create temp directory
-mkdir -p /tmp/skillkit
+# STEP 1: Create temp directory (from repository root)
+mkdir -p ./tmp/skillkit
 
 # STEP 2: Create JSON file with answers (REQUIRED - cannot be inline)
-cat > /tmp/skillkit/decision-answers.json <<'EOF'
+cat > ./tmp/skillkit/decision-answers.json <<'EOF'
 {
   "utility_task": false,
   "multi_step": true,
@@ -166,8 +166,8 @@ cat > /tmp/skillkit/decision-answers.json <<'EOF'
 EOF
 
 # STEP 3: Call decision helper with FILE PATH (not JSON string)
-cd /home/v/.claude/skills/skillkit && source venv/bin/activate
-python scripts/decision_helper.py --answers /tmp/skillkit/decision-answers.json
+cd skills/skillkit && source venv/bin/activate
+python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.json
 ```
 
 **Required JSON structure:**
