@@ -308,6 +308,7 @@ class DecisionHelper:
                 "confidence": 0.5,
                 "workflow_mode": mode,
                 "mode_note": mode_note,
+                "mode_reasoning": mode_note,
                 "reasoning": ["Too many questions could not be inferred from description"],
                 "inference_mode": True,
                 "inference_warning": f"Only {certain_count}/8 questions answered from keywords. {uncertain_count} questions uncertain.",
@@ -495,6 +496,7 @@ class DecisionHelper:
             "confidence": round(confidence, 2),
             "workflow_mode": mode,
             "mode_note": mode_note,
+            "mode_reasoning": mode_note,
             "reasoning": self.reasoning,
             "token_analysis": self._calculate_token_impact(),
             "pattern_suggestions": self._generate_pattern_suggestions(),
@@ -719,6 +721,7 @@ def main():
                 if args.mode == "full"
                 else "Use --mode full for TDD behavioral validation"
             )
+            result["mode_reasoning"] = result["mode_note"]
     
     except json.JSONDecodeError as e:
         result = {
