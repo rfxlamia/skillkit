@@ -237,6 +237,21 @@ def get_skill_template(skill_name, mode=WorkflowMode.FAST):
 
 ### GREEN Phase - Verification
 <!-- Confirm compliance WITH skill -->
+
+### Rationalization Table
+| Excuse | Reality |
+|--------|---------|
+| "Too simple to test" | Simple code breaks |
+| "I'll test after" | Tests-after proves nothing |
+
+## Pressure Test Results
+- [ ] Time pressure: __
+- [ ] Sunk cost pressure: __
+- [ ] Authority pressure: __
+- [ ] Exhaustion pressure: __
+- [ ] Combined pressure: __
+
+**Final Behavioral Score:** __/10
 """
 
     return template.format(
