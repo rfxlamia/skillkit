@@ -1,9 +1,9 @@
 # Claude SkillKit
 
-> Professional skill creation with research-driven workflow and automated validation. Features 12-step workflow, 10 automation scripts, and multi-layer validation checkpoints for achieving 9.0/10+ quality scores.
+> Professional skill creation with research-driven workflow and automated validation. Features dual-mode workflow (fast/full), behavioral validation, and multi-layer quality gates for achieving 9.0/10+ quality scores.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-green.svg)](.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](.claude-plugin/plugin.json)
 
 ---
 
@@ -28,13 +28,36 @@ Claude SkillKit is a plugin for [Claude Code](https://docs.anthropic.com/en/docs
 
 At its core, SkillKit includes a **meta-skill** (`skillkit`) that lets you create new skills and subagents using a research-driven, validation-first workflow.
 
+## What's New in v2.0
+
+### Dual-Mode Workflow
+- **Fast Mode**: Original 12-step workflow (structural validation)
+- **Full Mode**: Enhanced 15-step workflow (structural + behavioral validation)
+
+### Behavioral Testing
+Test skills under pressure to ensure agents actually follow them:
+- Time pressure ("I need this NOW!")
+- Sunk cost ("Already wrote 100 lines")
+- Authority pressure ("Manager says skip tests")
+- Exhaustion ("It's 2 AM...")
+
+### TDD for Skills
+Apply Test-Driven Development to skill creation:
+1. **RED**: Test WITHOUT skill, document failures
+2. **GREEN**: Write skill, verify compliance
+3. **REFACTOR**: Close loopholes, retest
+
+### Quality Scoring v2
+- Fast mode: 100% structural
+- Full mode: 60% structural + 40% behavioral
+
 ---
 
 ## Skills Catalog
 
 | # | Skill | Description |
 |---|-------|-------------|
-| 1 | **skillkit** | Meta-skill for creating new skills and subagents with 12-step research-driven workflow |
+| 1 | **skillkit** | Meta-skill for creating new skills and subagents with dual-mode (12-step fast, 15-step full) workflow |
 | 2 | **prompt-engineering** | Select optimal prompting methods (CoT, Few-Shot, ReAct, ToT) and output formats based on task complexity |
 | 3 | **creative-copywriting** | Persuasive social media writing with 150+ psychological triggers, hook formulas, and storytelling frameworks |
 | 4 | **social-media-seo** | Optimize social media content for discoverability with 100+ formula databases across Instagram, X/Twitter, and Threads |
