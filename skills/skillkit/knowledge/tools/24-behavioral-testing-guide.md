@@ -1,50 +1,50 @@
 ---
 title: "Behavioral Testing with pressure_tester.py"
-purpose: "Guide for testing skill compliance under pressure conditions"
+purpose: "Run RED->GREEN->REFACTOR behavioral checks for skill quality"
 tool_name: "pressure_tester.py"
 tool_type: "validation-layer"
 read_priority: "high"
 read_when:
   - "Using full-mode workflow"
   - "Creating discipline-enforcing skills"
-  - "Testing skill effectiveness"
-  - "After writing skill content"
+  - "Need evidence that agents comply under pressure"
 ---
 
 # Behavioral Testing Guide
 
-## Overview
+## What This Is For
 
-Behavioral testing validates that agents actually FOLLOW skills under pressure, not just understand them.
+Use this guide when you need to prove a skill changes agent behavior under pressure.
 
-**Two testing modes:**
-- **RED (Baseline):** Test WITHOUT skill and document failures
-- **GREEN (Verification):** Test WITH skill and verify compliance
+Behavioral testing in skill writing follows TDD:
+- RED: observe baseline failures without the skill
+- GREEN: verify improved behavior with the skill
+- REFACTOR: close loopholes and re-test
+
+## Critical v2 Limitation
+
+`pressure_tester.py` in v2 is a structural stub.
+- `run_scenario()` returns hardcoded `compliance_score=8.5`
+- Current output validates data shape and integration flow
+- Do not treat score as real compliance evidence
+
+Use output as a workflow signal, not as final proof of discipline quality.
 
 ## Pressure Types
 
-| Type | Scenario Example | What It Tests |
-|------|------------------|---------------|
-| **Time** | "I need this NOW!" | Shortcuts under deadline |
-| **Sunk Cost** | "Already wrote 100 lines" | Willingness to delete code |
-| **Authority** | "Manager says skip tests" | Independence from authority |
-| **Exhaustion** | "It's 2 AM..." | Discipline when tired |
-| **Combined** | All pressures at once | Real-world complexity |
+| Type | Scenario | Primary Risk |
+|------|----------|--------------|
+| `time` | "I need this now" | shortcut behavior |
+| `sunk_cost` | "already wrote 100 lines" | unwilling to restart |
+| `authority` | "manager says skip" | authority override |
+| `exhaustion` | "it's 2 AM" | low-discipline compromise |
+| `combined` | all above | multi-pressure failure |
 
-## Usage
+## Execution Workflow
 
-### Mode 1: Baseline (RED)
+### Step 1: RED (Baseline)
 
-```bash
-python3 scripts/pressure_tester.py /path/to/skill \
-  --pressure combined \
-  --skill-type discipline \
-  --format json
-```
-
-Document rationalizations found.
-
-### Mode 2: Verification (GREEN)
+Run before writing or editing the target skill:
 
 ```bash
 python3 scripts/pressure_tester.py /path/to/skill \
@@ -53,38 +53,79 @@ python3 scripts/pressure_tester.py /path/to/skill \
   --format json
 ```
 
-Score >= 7.0 = PASS.
+Record:
+- rationalizations the agent used
+- where the skill content currently fails to block those rationalizations
 
-## Interpreting Results
+### Step 2: GREEN (Verification)
 
-```json
-{
-  "status": "needs_improvement",
-  "compliance_score": 5.5,
-  "rationalizations_found": [
-    "'I'll test after' - Tests-after proves nothing",
-    "'Too simple to test' - Simple code breaks"
-  ],
-  "fixes_needed": [
-    "Add explicit counter for 'test after' rationalization",
-    "Add red flags section"
-  ]
-}
+After updating the skill content:
+
+```bash
+python3 scripts/pressure_tester.py /path/to/skill \
+  --pressure combined \
+  --skill-type discipline \
+  --format json
 ```
 
-## Common Rationalizations
+Check:
+- output schema is complete
+- rationalization counters are now present in skill text
 
-| Excuse | Counter |
-|--------|---------|
-| "Too simple" | Simple code breaks |
-| "I'll test after" | Tests-after proves nothing |
-| "Following spirit" | Letter = Spirit |
-| "Just this once" | No exceptions |
+### Step 3: REFACTOR (Loophole Closure)
 
-## Integration with Quality Score
+Run targeted pressure checks to tighten specific weak points:
 
-Full mode uses a 60/40 split:
-- 60% structural (existing validation)
-- 40% behavioral (pressure testing)
+```bash
+python3 scripts/pressure_tester.py /path/to/skill --pressure time --skill-type discipline --format json
+python3 scripts/pressure_tester.py /path/to/skill --pressure sunk_cost --skill-type discipline --format json
+python3 scripts/pressure_tester.py /path/to/skill --pressure authority --skill-type discipline --format json
+python3 scripts/pressure_tester.py /path/to/skill --pressure exhaustion --skill-type discipline --format json
+```
 
-Target: 9.0+ combined
+## Output Contract
+
+Expected JSON keys:
+- `status`
+- `compliance_score`
+- `rationalizations_found`
+- `fixes_needed`
+- `skill_type`
+- `pressure_type`
+
+If any key is missing, treat run as failed integration.
+
+## Integration with quality_scorer.py
+
+In full mode, `quality_scorer.py` combines:
+- structural score: 60%
+- behavioral score: 40%
+
+Run:
+
+```bash
+python3 scripts/quality_scorer.py /path/to/skill \
+  --behavioral \
+  --skill-type discipline \
+  --format json
+```
+
+Use result fields:
+- `mode`
+- `final_score`
+- `structural_score`
+- `behavioral_score`
+- `weights`
+
+## Failure Handling
+
+If behavioral run is invalid:
+- verify `pressure_tester.py` imports correctly
+- verify `--skill-type` is one of: `discipline`, `technique`, `pattern`, `reference`
+- re-run with `--format json` and inspect missing fields
+
+If run is valid but skill still weak:
+- update rationalization table in SKILL
+- add explicit "no exceptions" counters
+- add red-flags section
+- rerun RED/GREEN/REFACTOR
