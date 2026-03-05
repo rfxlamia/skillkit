@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.1] - 2026-03-06
+
+### Fixed
+- `decision_helper.py`: Added `mode_reasoning` alongside `mode_note` for output contract compatibility.
+- `test_generator.py`: Behavioral template generation is now gated to pytest mode only.
+- `pressure_tester.py`: Added explicit stub-mode warning output.
+
+### Changed
+- Updated hardcoded local path examples to portable path usage in SkillKit docs and tool guides.
+- Enforced stronger stop conditions in `SKILL.md` (mode selection, user approval gates, ambiguous routing).
+- Deprecated legacy structural-only `test_generator.py` usage in favor of v2 behavioral workflow guidance.
+
 ## [2.0.0] - 2025-03-05
 
 ### Added

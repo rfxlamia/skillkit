@@ -7,7 +7,7 @@
     "email": "rfxlamia@github.com"
   },
   "metadata": {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Skillkit v2 introduces dual-mode workflow (fast/full), behavioral pressure testing, TDD cycle support, and weighted quality scoring."
   },
   "plugins": [
@@ -15,7 +15,7 @@
       "name": "skillkit-core",
       "description": "Professional skill and subagent creation with dual-mode workflow: 12-step fast mode and 15-step full mode with behavioral pressure testing and TDD integration.",
       "source": "./skills/skillkit",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "author": {
         "name": "rfxlamia"
       },

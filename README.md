@@ -3,7 +3,7 @@
 > Professional skill creation with research-driven workflow and automated validation. Features dual-mode workflow (fast/full), behavioral validation, and multi-layer quality gates for achieving 9.0/10+ quality scores.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-2.0.1-green.svg)](.claude-plugin/plugin.json)
 
 ---
 
@@ -191,7 +191,7 @@ See [`skills/skillkit/knowledge/INDEX.md`](skills/skillkit/knowledge/INDEX.md) f
 ```
 claude-skillkit/
 ├── .claude-plugin/
-│   ├── plugin.json            # Plugin metadata (v1.3.0)
+│   ├── plugin.json            # Plugin metadata (v2.0.1)
 │   └── marketplace.json       # Marketplace listing
 ├── skills/
 │   ├── skillkit/              # Meta-skill: create skills & subagents
