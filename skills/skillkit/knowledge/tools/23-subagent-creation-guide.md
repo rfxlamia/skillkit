@@ -46,7 +46,7 @@ Subagents are stored as individual `.md` files in `~/.claude/agents/`:
 
 **Create new subagent:**
 ```bash
-cd /home/v/.claude/skills/skillkit
+cd ~/.claude/skills/skillkit
 python3 scripts/init_subagent.py <name> --path ~/.claude/agents
 ```
 

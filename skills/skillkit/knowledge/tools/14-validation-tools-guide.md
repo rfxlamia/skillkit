@@ -25,7 +25,7 @@ last_updated: "2025-11-05"
 ### Using Virtual Environment (Recommended)
 
 ```bash
-cd /home/v/.claude/skills/skillkit
+cd ~/.claude/skills/skillkit
 source venv/bin/activate
 python scripts/validate_skill.py --help
 ```
@@ -53,7 +53,7 @@ python scripts/validate_skill.py <skill_path> [--strict] [--format text|json]
 python scripts/validate_skill.py ./my-skill/
 
 # Full path without venv
-python3 /home/v/.claude/skills/skillkit/scripts/validate_skill.py ./my-skill/
+python3 "$HOME/.claude/skills/skillkit/scripts/validate_skill.py" ./my-skill/
 ```
 
 **Output:**
@@ -144,7 +144,7 @@ python scripts/validate_skill.py ./my-skill/ --strict
 python scripts/validate_skill.py ./my-skill/ --format json
 
 # Full path (tanpa venv)
-python3 /home/v/.claude/skills/skillkit/scripts/validate_skill.py ./my-skill/
+python3 "$HOME/.claude/skills/skillkit/scripts/validate_skill.py" ./my-skill/
 ```
 
 **Next:** security_scanner.py (File 16) â†’ token_estimator.py (File 15)

@@ -39,10 +39,10 @@ Agent-layer tool untuk instant Skills vs Subagents recommendations menggunakan F
 
 ```bash
 # STEP 1: Create temp directory
-mkdir -p /tmp/skillkit
+mkdir -p ./tmp/skillkit
 
 # STEP 2: Create JSON file with answers (REQUIRED - cannot be inline)
-cat > /tmp/skillkit/decision-answers.json <<'EOF'
+cat > ./tmp/skillkit/decision-answers.json <<'EOF'
 {
   "utility_task": false,
   "multi_step": true,
@@ -56,8 +56,8 @@ cat > /tmp/skillkit/decision-answers.json <<'EOF'
 EOF
 
 # STEP 3: Call decision helper with FILE PATH (not JSON string)
-cd /home/v/.claude/skills/skillkit && source venv/bin/activate
-python scripts/decision_helper.py --answers /tmp/skillkit/decision-answers.json
+cd ~/.claude/skills/skillkit && source venv/bin/activate
+python scripts/decision_helper.py --answers ./tmp/skillkit/decision-answers.json
 ```
 
 **Required JSON structure:**
@@ -205,7 +205,7 @@ The script reads the file at that path (see lines 669-677 of decision_helper.py)
 **✅ Correct: Create JSON file first, then pass the file path**
 ```bash
 # STEP 1: Create the JSON file
-cat > /tmp/skillkit/answers.json <<'EOF'
+cat > ./tmp/skillkit/answers.json <<'EOF'
 {
   "utility_task": true,
   "multi_step": false,
@@ -219,13 +219,13 @@ cat > /tmp/skillkit/answers.json <<'EOF'
 EOF
 
 # STEP 2: Pass the FILE PATH to --answers
-python decision_helper.py --answers /tmp/skillkit/answers.json
+python decision_helper.py --answers ./tmp/skillkit/answers.json
 ```
 
 **Quick validation:**
 ```bash
 # Test if file exists and has valid JSON
-test -f /tmp/skillkit/answers.json && python3 -m json.tool < /tmp/skillkit/answers.json
+test -f ./tmp/skillkit/answers.json && python3 -m json.tool < ./tmp/skillkit/answers.json
 ```
 
 ---
