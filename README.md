@@ -24,32 +24,13 @@
 
 ## What is Claude SkillKit?
 
-Claude SkillKit is a plugin for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that provides a collection of **21 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
+Claude SkillKit v2 is a plugin for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that provides a collection of **21 skills** and **7 subagents** designed to extend Claude's capabilities across content creation, engineering frameworks, security testing, and more.
 
-At its core, SkillKit includes a **meta-skill** (`skillkit`) that lets you create new skills and subagents using a research-driven, validation-first workflow.
+At its core, SkillKit v2 includes a **meta-skill** (`skillkit`) that helps create and validate new skills/subagents using a dual-mode workflow:
+- **Fast mode** for quick structural validation
+- **Full mode** for structural + behavioral validation with TDD-style pressure testing
 
-## What's New in v2.0
-
-### Dual-Mode Workflow
-- **Fast Mode**: Original 12-step workflow (structural validation)
-- **Full Mode**: Enhanced 15-step workflow (structural + behavioral validation)
-
-### Behavioral Testing
-Test skills under pressure to ensure agents actually follow them:
-- Time pressure ("I need this NOW!")
-- Sunk cost ("Already wrote 100 lines")
-- Authority pressure ("Manager says skip tests")
-- Exhaustion ("It's 2 AM...")
-
-### TDD for Skills
-Apply Test-Driven Development to skill creation:
-1. **RED**: Test WITHOUT skill, document failures
-2. **GREEN**: Write skill, verify compliance
-3. **REFACTOR**: Close loopholes, retest
-
-### Quality Scoring v2
-- Fast mode: 100% structural
-- Full mode: 60% structural + 40% behavioral
+In short, SkillKit v2 is a practical system for building reliable Claude capabilities with repeatable quality gates, not just a template pack.
 
 ---
 
