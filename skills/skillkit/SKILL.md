@@ -29,69 +29,97 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 
 ---
 
-## Section 2: Full Creation Workflow (Overview)
+## Section 2: Creation Workflows (Dual Mode)
 
-**Prerequisites:** Skill description provided, workspace available
-**Quality Target:** >=9.0/10
-**Time:** <10 min with automation
+**Prerequisites:** Skill description provided, workspace available.
 
-> **💡 Quick Note:** Pastikan aktifkan venv sebelum pakai tools:
-> ```bash
-> cd /home/v/.claude/skills/skillkit && source venv/bin/activate
-> ```
+### Mode Selection (Required at Start)
 
-### 12-Step Process with Validation Gates:
+Agent MUST detect or prompt for workflow mode before running the creation flow.
 
-**STEP 0: Decide Approach**
-- Tool: `decision_helper.py`
-- Decides: Skills vs Subagents
-- Gate: Proceed only if "Skills" recommended
+| Mode | Steps | Validation | Quality Target | Time |
+|------|-------|------------|----------------|------|
+| **fast** | 12 | Structural only | >=9.0/10 | <10 min |
+| **full** | 15 | Structural + Behavioral | >=9.0/10 and behavioral >=7.0 | <20 min |
 
-**STEP 1: Understand & Research**
-- 1a. Gather requirements
-- 1b. Identify knowledge gaps
-- 1c. Research domain (Verbalized Sampling: 3-4 web searches with diverse angles)
-- 1d. Generate proposals (3-5 options evaluated with multi-criteria scoring)
-- 1e. User validates and approves approach
-- 1f. Execution planning: P0/P1/P2 prioritization with token budgets assigned
-  - See: `references/section-2-full-creation-workflow.md` (Step 1f details)
+Default mode is `fast` for backward compatibility.
 
-**STEP 2: Initialize & Create Content**
-- Tool: `python scripts/init_skill.py skill-name --path /path` (Anthropic)
-- Alternative: `migration_helper.py` (if converting from document)
-- 2.5 Checkpoint: Sequential creation (P0→P1→P2), token budget monitoring
-- 2.8 Verification: P0/P1/P2 completion validation before proceeding
-  - See: `references/section-2-full-creation-workflow.md` (Steps 2.5 & 2.8 details)
+### Workflow A: Fast Mode (12 Steps)
 
-**STEP 3: Validate Structure**
-- Tool: `validate_skill.py`
-- Gate: Fix critical issues before proceeding
+Use when `.skillkit-mode` contains `fast` or marker does not exist.
 
-**STEP 4: Security Audit**
-- Tool: `security_scanner.py`
-- Gate: Fix critical vulnerabilities immediately
+Phase 1: Decision and Research
+- Step 0: Decide approach (`decision_helper.py`)
+- Step 1: Research and proposals
+- Step 2: User validation
 
-**STEP 5: Token Optimization**
-- Tool: `token_estimator.py`
-- Gate: Optimize if >5000 tokens
+Phase 2: Creation
+- Step 3: Initialize skill (`init_skill.py --mode fast`)
+- Step 4: Create content
 
-**STEP 6: Progressive Disclosure**
-- Tool: `split_skill.py`
-- Gate: Split if SKILL.md >350 lines
+Phase 3: Structural Validation
+- Step 5: Validate structure (`validate_skill.py`)
+- Step 6: Security audit (`security_scanner.py`)
+- Step 7: Token optimization (`token_estimator.py`)
 
-**STEP 7: Generate Tests**
-- Tool: `test_generator.py`
-- Creates: Automated validation tests
+Phase 4: Packaging
+- Step 8: Progressive disclosure check
+- Step 9: Generate tests (`test_generator.py`)
+- Step 10: Quality assessment (`quality_scorer.py`)
+- Step 11: Package (`package_skill.py`)
 
-**STEP 8: Quality Assessment**
-- Tool: `quality_scorer.py`
-- Gate: Must achieve >=9.0/10 before packaging
+### Workflow B: Full Mode (15 Steps)
 
-**STEP 9: Package for Deployment**
-- Tool: `python scripts/package_skill.py skill-name/` (Anthropic)
-- Creates: .skill file ready to deploy
+Use when `.skillkit-mode` contains `full`.
 
-**For detailed implementation:** [See references/section-2-full-creation-workflow.md](references/section-2-full-creation-workflow.md)
+Phase 1: Decision and Research
+- Step 0: Decide approach (`decision_helper.py`)
+- Step 1: Research and proposals
+- Step 2: User validation
+
+Phase 2: Behavioral Baseline (extra vs fast)
+- Step 3 (RED): Run pressure scenarios without skill
+- Step 4: Document baseline failures
+
+Phase 3: Creation
+- Step 5: Initialize skill (`init_skill.py --mode full`)
+- Step 6: Create content addressing baseline failures
+
+Phase 4: Behavioral Verification (extra vs fast)
+- Step 7 (GREEN): Run scenarios with skill
+- Step 8: Fix gaps
+
+Phase 5: Structural Validation
+- Step 9: Validate structure
+- Step 10: Security audit
+- Step 11: Token optimization
+
+Phase 6: Refinement (extra vs fast)
+- Step 12 (REFACTOR): Combined pressure tests
+- Step 13: Close loopholes
+
+Phase 7: Packaging
+- Step 14: Quality assessment (`quality_scorer.py --behavioral`)
+- Step 15: Package (`package_skill.py`)
+
+### Mode Detection
+
+Mode detection priority:
+1. Explicit flag: `--mode fast` or `--mode full`
+2. Skill marker: `.skillkit-mode` file
+3. Default: `fast`
+
+```python
+def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
+    if cli_flag:
+        return cli_flag
+
+    marker_file = Path(skill_path) / ".skillkit-mode"
+    if marker_file.exists():
+        return marker_file.read_text().strip()
+
+    return "fast"
+```
 
 ---
 
@@ -358,7 +386,46 @@ Guide: `references/section-6-subagent-creation-workflow.md`
 
 ---
 
-## Section 8: Knowledge Reference Map (Overview)
+## Section 8: Mode Selection Guide
+
+### When to Use Fast Mode
+
+Use fast mode when:
+- simple utility or conversion skills
+- quick prototypes
+- API or reference-focused skills
+- internal tooling with low behavioral risk
+
+Do not use fast mode when:
+- skill enforces discipline (TDD, strict verification, no-shortcut rules)
+- skill has many decision points and loophole risk
+- production-grade compliance is mandatory
+
+### When to Use Full Mode
+
+Use full mode when:
+- discipline enforcement is core behavior
+- workflow is multi-step and error-sensitive
+- skill will be reused broadly by multiple agents
+- quality and compliance are both critical
+
+Full mode may be overkill for:
+- very small one-step techniques
+- personal one-off reference notes
+
+### Decision Matrix
+
+| Skill Type | Recommended Mode | Why |
+|------------|------------------|-----|
+| TDD or discipline skill | **full** | must resist rationalization under pressure |
+| Code pattern skill | **fast** | structural checks are usually sufficient |
+| API reference skill | **fast** | primarily retrieval accuracy |
+| Workflow orchestration skill | **full** | complex flow benefits from pressure checks |
+| Debugging technique skill | **fast** | concise technique with clear method |
+
+---
+
+## Section 9: Knowledge Reference Map (Overview)
 
 **Strategic context loaded on-demand.**
 
