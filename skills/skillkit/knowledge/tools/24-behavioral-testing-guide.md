@@ -12,6 +12,10 @@ read_when:
 
 # Behavioral Testing Guide
 
+> **DEPRECATED (v2.1):** `pressure_tester.py` has been superseded by the Full Mode Behavioral Testing Protocol.
+> For full mode Steps 3, 7, 12: Load `references/section-2-full-creation-workflow.md` → section "Full Mode Behavioral Testing Protocol".
+> The bash commands below are no longer functional.
+
 ## What This Is For
 
 Use this guide when you need to prove a skill changes agent behavior under pressure.
@@ -23,12 +27,14 @@ Behavioral testing in skill writing follows TDD:
 
 ## Critical v2 Limitation
 
-`pressure_tester.py` in v2 is a structural stub.
-- `run_scenario()` returns hardcoded `compliance_score=8.5`
-- Current output validates data shape and integration flow
-- Do not treat score as real compliance evidence
+`pressure_tester.py` was a structural stub in v2 and has been removed in v2.1.
+- `run_scenario()` returned hardcoded `compliance_score=8.5`
+- Output validated data shape and integration flow only
+- Score was never real compliance evidence
 
-Use output as a workflow signal, not as final proof of discipline quality.
+As of v2.1, the replacement is the **subagent dispatch protocol** documented in
+`references/section-2-full-creation-workflow.md` under "Full Mode Behavioral Testing Protocol".
+Use that section for all RED/GREEN/REFACTOR cycles going forward.
 
 ## Pressure Types
 
@@ -46,11 +52,9 @@ Use output as a workflow signal, not as final proof of discipline quality.
 
 Run before writing or editing the target skill:
 
-```bash
-python3 scripts/pressure_tester.py /path/to/skill \
-  --pressure combined \
-  --skill-type discipline \
-  --format json
+```
+# DEPRECATED: pressure_tester.py exits with error in v2.1
+# Use Full Mode Behavioral Testing Protocol in section-2-full-creation-workflow.md instead
 ```
 
 Record:
@@ -61,11 +65,9 @@ Record:
 
 After updating the skill content:
 
-```bash
-python3 scripts/pressure_tester.py /path/to/skill \
-  --pressure combined \
-  --skill-type discipline \
-  --format json
+```
+# DEPRECATED: pressure_tester.py exits with error in v2.1
+# Use Full Mode Behavioral Testing Protocol in section-2-full-creation-workflow.md instead
 ```
 
 Check:
@@ -76,11 +78,9 @@ Check:
 
 Run targeted pressure checks to tighten specific weak points:
 
-```bash
-python3 scripts/pressure_tester.py /path/to/skill --pressure time --skill-type discipline --format json
-python3 scripts/pressure_tester.py /path/to/skill --pressure sunk_cost --skill-type discipline --format json
-python3 scripts/pressure_tester.py /path/to/skill --pressure authority --skill-type discipline --format json
-python3 scripts/pressure_tester.py /path/to/skill --pressure exhaustion --skill-type discipline --format json
+```
+# DEPRECATED: pressure_tester.py exits with error in v2.1
+# Use Full Mode Behavioral Testing Protocol in section-2-full-creation-workflow.md instead
 ```
 
 ## Output Contract
@@ -101,13 +101,9 @@ In full mode, `quality_scorer.py` combines:
 - structural score: 60%
 - behavioral score: 40%
 
-Run:
-
-```bash
-python3 scripts/quality_scorer.py /path/to/skill \
-  --behavioral \
-  --skill-type discipline \
-  --format json
+```
+# DEPRECATED: quality_scorer.py --behavioral is no longer functional in v2.1
+# Use Full Mode Behavioral Testing Protocol in section-2-full-creation-workflow.md instead
 ```
 
 Use result fields:
