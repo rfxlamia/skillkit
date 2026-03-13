@@ -97,20 +97,19 @@ class QualityScorer:
             "mode": "full",
         }
 
-    def run_behavioral_tests(self, skill_path: str, skill_type: str) -> float:
+    def run_behavioral_tests(self, skill_path: str, skill_type: str = None) -> float:
         """
-        Run pressure tests and return behavioral score (0.0-10.0).
-        Called when --behavioral flag is passed.
-        """
-        try:
-            from pressure_tester import PressureTester, SkillType
+        DEPRECATED in v2.1: Behavioral testing is now done via subagent dispatch.
 
-            tester = PressureTester()
-            result = tester.run_combined_pressure(skill_path, SkillType(skill_type))
-            return result.compliance_score
-        except Exception as exc:
-            print(f"Warning: Behavioral testing failed: {exc}")
-            return 0.0
+        Raises:
+            NotImplementedError: Always. Use Full Mode Behavioral Testing Protocol instead.
+        """
+        raise NotImplementedError(
+            "Behavioral scoring via pressure_tester.py is deprecated in v2.1.\n"
+            "Use the Full Mode Behavioral Testing Protocol instead:\n"
+            "Load: skills/skillkit/references/section-2-full-creation-workflow.md\n"
+            "Section: 'Full Mode Behavioral Testing Protocol'"
+        )
     
     # ========== SCORING CATEGORIES ==========
     
@@ -904,6 +903,15 @@ def main():
         structural_score = round(overall['percentage'] / 10.0, 2)
         behavioral_score = None
         if args.behavioral:
+            import warnings
+            warnings.warn(
+                "DEPRECATED: --behavioral flag is deprecated in v2.1. "
+                "Behavioral scoring via pressure_tester.py has been removed. "
+                "Use the Full Mode Behavioral Testing Protocol instead: "
+                "skills/skillkit/references/section-2-full-creation-workflow.md",
+                DeprecationWarning,
+                stacklevel=2,
+            )
             behavioral_score = scorer.run_behavioral_tests(args.skill_path, args.skill_type)
         final_score = scorer.calculate_final_score(structural_score, behavioral_score)
         
