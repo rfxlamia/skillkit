@@ -82,6 +82,10 @@ Phase 4: Packaging
 
 Use when `.skillkit-mode` contains `full`.
 
+**→ READ `references/section-2-full-creation-workflow.md` IN FULL before starting.**
+**Create a TodoWrite task for each step listed in that file, then follow them in order.**
+The outline below is a summary only — the reference file is authoritative.
+
 Phase 1: Decision and Research
 - Step 0: Decide approach (`decision_helper.py`)
 - Step 1: Research and proposals
