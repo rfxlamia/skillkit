@@ -383,7 +383,8 @@ Generates automated tests for validation.
 ```
 
 **Gate:** Must document at least 2 failure cases before proceeding to Step 5 (creation).
-If agent complied in ALL scenarios → pressure prompts are too weak. Make them more specific and repeat.
+- If agent complied in ALL scenarios → pressure prompts are too weak. Make them more specific and repeat all 4.
+- If only 1 failure found → make the remaining prompts more provocative for that specific rule, re-run those specific scenarios until 2 failures are documented.
 
 ---
 
@@ -448,4 +449,4 @@ If agent complied in ALL scenarios → pressure prompts are too weak. Make them 
 5. DONE when: two consecutive Step 12 runs produce no new rationalizations
 ```
 
-**Gate:** No new rationalizations in combined pressure test before Step 13 (close loopholes).
+**Gate:** Two consecutive runs with no new rationalizations before proceeding to Step 13 (close loopholes).
