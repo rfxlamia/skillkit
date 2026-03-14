@@ -1,17 +1,17 @@
 {
   "name": "skillkit-creative",
-  "description": "Content creation powerhouse bundle",
+  "description": "Content creation powerhouse",
   "version": "1.0.0",
   "author": {
     "name": "rfxlamia",
     "email": "rfxlamia@github.com"
   },
   "skills": [
-    "../../skills/thread-pro",
-    "../../skills/storyteller",
-    "../../skills/screenwriter",
-    "../../skills/creative-copywriting",
-    "../../skills/imagine",
-    "../../skills/diverse-content-gen"
+    "skills/thread-pro",
+    "skills/storyteller",
+    "skills/screenwriter",
+    "skills/creative-copywriting",
+    "skills/imagine",
+    "skills/diverse-content-gen"
   ]
 }
