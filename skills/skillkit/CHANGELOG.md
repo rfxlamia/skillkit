@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.6] - 2026-03-14
+
+### Fixed
+- Installation via Claude Code plugin marketplace is currently broken due to a `disable-model-invocation` conflict between plugin commands and skills of the same name — marked as known issue in README
+
+### Documentation
+- Updated README installation section: recommend copying skills directly to `~/.claude/skills/` as the reliable method
+- Plugin marketplace section now clearly marked with ⚠️ known issue warning
+
+---
+
 ## [2.1.0] - 2026-03-13
 
 ### Added

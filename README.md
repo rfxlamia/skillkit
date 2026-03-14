@@ -5,7 +5,7 @@
 > **Previously known as `claude-skillkit`.** All old links redirect here automatically.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.1.2-green.svg)](.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-2.1.6-green.svg)](.claude-plugin/plugin.json)
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-red?logo=githubsponsors)](https://github.com/sponsors/rfxlamia)
 
 ---
@@ -107,21 +107,40 @@ The `skillkit` skill is the engine that powers creation of new skills and subage
 
 ## Installation
 
-### As a Claude Code Plugin
+### Recommended: Copy Skills Directly
 
-```bash
-claude plugin marketplace add rfxlamia/skillkit
-```
+The most reliable way to install SkillKit is to copy skill content directly into your Claude Code skills directory.
 
-### Manual Installation
-
-Clone the repository into your Claude Code skills directory:
+Copy individual skills into `~/.claude/skills/`:
 
 ```bash
 git clone https://github.com/rfxlamia/skillkit.git
+cp -r skillkit/skills/skillkit ~/.claude/skills/
+cp -r skillkit/skills/prompt-engineering ~/.claude/skills/
+# ... repeat for any skill you want
 ```
 
-Then reference the skills/agents in your Claude Code configuration.
+Or copy all skills at once:
+
+```bash
+cp -r skillkit/skills/. ~/.claude/skills/
+```
+
+For agents, copy into `~/.claude/agents/`:
+
+```bash
+cp skillkit/agents/. ~/.claude/agents/
+```
+
+### Plugin Marketplace (Currently Broken)
+
+> **⚠️ Known issue:** Installation via the Claude Code plugin marketplace is currently broken and under investigation. The `disable-model-invocation` error prevents skills from being invoked after install. Use the method above instead.
+
+```bash
+# These commands work but the installed skills fail to run:
+claude plugin marketplace add rfxlamia/skillkit
+claude plugin install skillkit-core
+```
 
 ---
 

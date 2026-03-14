@@ -7,7 +7,7 @@
     "email": "rfxlamia@github.com"
   },
   "metadata": {
-    "version": "2.1.2",
+    "version": "2.1.6",
     "description": "Professional skill and subagent creation toolkit with dual-mode workflow (fast/full), behavioral validation, and quality gates for 9.0/10+ scores."
   },
   "plugins": [
@@ -15,7 +15,7 @@
       "name": "skillkit-core",
       "description": "Professional skill and subagent creation with dual-mode workflow: 12-step fast mode and 15-step full mode with behavioral pressure testing and TDD integration.",
       "source": "./skills/skillkit",
-      "version": "2.1.2",
+      "version": "2.1.6",
       "author": {
         "name": "rfxlamia"
       },
