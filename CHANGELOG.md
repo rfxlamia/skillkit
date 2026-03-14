@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.4] - 2026-03-14
+
+### Fixed
+- Move commands/ folder to skills/skillkit/ for proper plugin discovery
+- Slash commands (/skillkit, /verify, /validate-plan) now work correctly
+
 ## [2.1.3] - 2026-03-14
 
 ### Fixed
