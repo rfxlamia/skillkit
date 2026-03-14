@@ -1,0 +1,217 @@
+{
+  "skills": [
+    {
+      "name": "adversarial-review",
+      "description": "Adversarial review protocol for brainstorming, product planning, and technical architecture.",
+      "category": "quality",
+      "type": "skill",
+      "path": "skills/adversarial-review"
+    },
+    {
+      "name": "baby-education",
+      "description": "Makes agent explain concepts with extreme clarity for beginners learning new topics or projects. Uses analogies-first approach, visual mental models, and ELI5 style to transform complex technical explanations into accessible learning experiences. Trigger when user is new to a technology, starting a project, or explicitly requests simple explanations.",
+      "category": "engineering",
+      "type": "skill",
+      "path": "skills/baby-education"
+    },
+    {
+      "name": "been-there-done-that",
+      "description": "Guides an agent to document developer progress objectively after completing",
+      "category": "productivity",
+      "type": "skill",
+      "path": "skills/been-there-done-that"
+    },
+    {
+      "name": "coolhunter",
+      "description": "Trend intelligence and cultural signal detection for emerging news and behaviors.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/coolhunter"
+    },
+    {
+      "name": "creative-copywriting",
+      "description": "Master persuasive writing for social media with proven hooks, storytelling frameworks, and",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/creative-copywriting"
+    },
+    {
+      "name": "diverse-content-gen",
+      "description": "Agent workflow for generating highly diverse creative content using Verbalized Sampling (VS) technique. Use when user requests multiple variations, brainstorming, creative ideas, or when standard prompting produces repetitive outputs. Increases diversity by 1.6-2.1× while maintaining quality. Works for: blog posts, social media captions, stories, campaign ideas, product descriptions, taglines, and open-ended creative tasks.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/diverse-content-gen"
+    },
+    {
+      "name": "framework-critical-thinking",
+      "description": "Architectural framework for building AI agents with critical thinking capabilities - structured reasoning selection (CoT/ToT/GoT), metacognitive monitoring, self-verification, and cognitive bias detection. Use when building or enhancing AI agents that require reliable, self-correcting, and transparent reasoning.",
+      "category": "agent",
+      "type": "skill",
+      "path": "skills/framework-critical-thinking"
+    },
+    {
+      "name": "framework-initiative",
+      "description": "Framework for agents to understand implicit user intent, think before acting, and consider action impact. Uses STAR framework (Stop-Think-Analyze-Respond) to prevent literal execution that doesn't match context. Use when agent receives ambiguous requests, abstract commands like \"fix\", \"improve\", \"delete all\", or actions with potential wide-scope impact. Trigger on code modification requests without explicit scope constraints.",
+      "category": "agent",
+      "type": "skill",
+      "path": "skills/framework-initiative"
+    },
+    {
+      "name": "humanize-docs",
+      "description": "Transform AI-to-AI documentation into human-readable prose with personality.",
+      "category": "documentation",
+      "type": "skill",
+      "path": "skills/humanize-docs"
+    },
+    {
+      "name": "imagine",
+      "description": "Prepare detailed, professional prompts for Google Imagen 3/4 image generation. Supports character, environment, and object prompts using natural language with technical photography specifications. Extensible support for multiple art styles via reference files.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/imagine"
+    },
+    {
+      "name": "pre-deploy-checklist",
+      "description": "Intelligent pre-deployment QA checklist generator. Explores the codebase,",
+      "category": "deployment",
+      "type": "skill",
+      "path": "skills/pre-deploy-checklist"
+    },
+    {
+      "name": "prompt-engineering",
+      "description": "Use when you need to design effective LLM prompts. Intelligently selects optimal prompting methods (Chain of Thought, Few-Shot, Zero-Shot, ReAct, Tree of Thoughts, Self-Consistency) and output formats (XML, JSON, YAML, Natural Language) based on task complexity, target LLM, accuracy requirements, and available context. Trigger on prompt design, prompt optimization, or when choosing between prompting techniques.",
+      "category": "engineering",
+      "type": "skill",
+      "path": "skills/prompt-engineering"
+    },
+    {
+      "name": "quick-spec",
+      "description": "Create implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. USE WHEN user needs to plan a feature, create tech-spec, or prepare implementation-ready documentation. Triggers on \"buat spec\", \"create tech spec\", \"plan feature\", \"specification\", or when user describes a feature to build without clear implementation plan.",
+      "category": "planning",
+      "type": "skill",
+      "path": "skills/quick-spec"
+    },
+    {
+      "name": "readme-expert",
+      "description": "Create comprehensive, accurate README.md files with anti-hallucination validation.",
+      "category": "documentation",
+      "type": "skill",
+      "path": "skills/readme-expert"
+    },
+    {
+      "name": "red-teaming",
+      "description": "Comprehensive red teaming methodology for both cybersecurity and AI/LLM systems. Use when conducting adversary emulation, vulnerability assessment, attack simulation, or security validation. Trigger on requests for penetration testing, threat modeling, security audits, MITRE ATT&CK operations, LLM safety testing, prompt injection attacks, or compliance validation (OWASP, NIST, TIBER, DORA, EU AI Act). Apply when users ask to \"test like an attacker\", \"red team our system\", \"validate security posture\", \"assess LLM vulnerabilities\", or \"simulate cyber attacks\". Includes planning frameworks, execution strategies, reporting templates, and progressive references to specialized attack techniques and tools.",
+      "category": "security",
+      "type": "skill",
+      "path": "skills/red-teaming"
+    },
+    {
+      "name": "releasing",
+      "description": "Automate the full release workflow: version bumping (major/minor/patch), changelog generation,",
+      "category": "deployment",
+      "type": "skill",
+      "path": "skills/releasing"
+    },
+    {
+      "name": "screenwriter",
+      "description": "Transform creative ideas into professional, production-ready screenplays optimized for AI video generation pipelines. Converts raw concepts into structured scene-by-scene narratives with rich visual descriptions, proper screenplay formatting, and XML-tagged output for seamless integration with image/video generation tools (imagine, arch-v).",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/screenwriter"
+    },
+    {
+      "name": "skillkit",
+      "description": "Research-driven toolkit for creating and validating skills and subagents with",
+      "category": "core",
+      "type": "skill",
+      "path": "skills/skillkit"
+    },
+    {
+      "name": "social-media-seo",
+      "description": "Optimize social media content for maximum discoverability and engagement using 2025-proven SEO strategies.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/social-media-seo"
+    },
+    {
+      "name": "storyteller",
+      "description": "Transform abstract/metaphorical narrative into concrete visual story structure.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/storyteller"
+    },
+    {
+      "name": "thread-pro",
+      "description": "Transform boring AI writing into viral threads with strong hooks and relatable voice.",
+      "category": "creative",
+      "type": "skill",
+      "path": "skills/thread-pro"
+    },
+    {
+      "name": "tinkering",
+      "description": "Safe experimentation framework for AI agents. Creates isolated sandbox",
+      "category": "experimentation",
+      "type": "skill",
+      "path": "skills/tinkering"
+    },
+    {
+      "name": "validate-plan",
+      "description": "Validate implementation plans against DRY, YAGNI, TDD principles and best practices. Use when reviewing development plans created by writing-plans or similar planning workflows to identify gaps, anti-patterns, and improvement opportunities before execution.",
+      "category": "planning",
+      "type": "skill",
+      "path": "skills/validate-plan"
+    },
+    {
+      "name": "verify-before-ship",
+      "description": "Enforce agent to complete all 7 production safety gates with evidence before any deployment. Use when about to deploy, push to production, merge a release branch, or ship any change to a live environment. Blocks rationalized shortcuts under time, authority, sunk-cost, or exhaustion pressure.",
+      "category": "deployment",
+      "type": "skill",
+      "path": "skills/verify-before-ship"
+    }
+  ],
+  "agents": [
+    {
+      "name": "creative-copywriter",
+      "description": "Intelligent creative copywriting orchestration for social media. Use this subagent when users need: (1) Hook creation with psychological triggers, (2) Carousel storytelling with swipe optimization, (3) Power word selection for specific emotions, (4) A/B test variations with different emotional angles, or (5) Complete content narratives with hooks and CTAs. Examples: <example>Context: User wants Instagram carousel hooks. user: 'Create hooks for my productivity carousel' assistant: 'I'll use the creative-copywriter subagent to query hook formulas and generate variations with different emotional triggers' <commentary>Since this requires querying hook-formulas.csv, power-words.csv, and synthesizing platform-specific optimization, use creative-copywriter for psychology-backed recommendations.</commentary></example> <example>Context: User needs swipe-worthy carousel structure. user: 'Help me structure a transformation carousel about my weight loss journey' assistant: 'Let me use the creative-copywriter subagent to recommend storytelling frameworks and swipe triggers' <commentary>Since this involves querying carousel-structures.csv, swipe-triggers.csv, and emotional-arcs.csv, use creative-copywriter proactively.</commentary></example> <example>Context: User wants multiple hook variations to test. user: 'Generate 3 different hooks for my business failure story' assistant: 'I'll engage the creative-copywriter subagent to create variations using different psychological triggers' <commentary>Since this requires multi-database querying and variation generation with different emotional angles, use creative-copywriter to provide psychology-backed options.</commentary></example>",
+      "type": "agent",
+      "path": "agents/creative-copywriter.md"
+    },
+    {
+      "name": "dario-amodei",
+      "description": "Use this agent when you need safety-first, deliberate decision-making with transparency, intellectual rigor, and democratic oversight principles. Examples: <example>Context: User deciding on AI model deployment timing. user: 'We have technical capability ready, should we launch now?' assistant: 'I'll engage the dario-amodei agent to evaluate safety-readiness beyond technical capability' <commentary>Since this requires assessing whether deployment safety research is sufficient, use the dario-amodei agent to provide perspective on responsible sequencing and risk mitigation.</commentary></example> <example>Context: User structuring AI governance. user: 'How should we organize decision-making authority for AI development?' assistant: 'Let me use the dario-amodei agent for governance design' <commentary>Since this involves balancing efficiency with oversight, use the dario-amodei agent to provide insights on distributed decision-making and accountability structures.</commentary></example> <example>Context: User navigating regulatory landscape. user: 'Should we support or oppose new AI regulations?' assistant: 'I'll engage the dario-amodei agent to evaluate regulatory engagement strategy' <commentary>Since this requires understanding responsible regulation advocacy, use the dario-amodei agent to provide perspective on how regulation can enable beneficial AI while managing risks.</commentary></example>",
+      "type": "agent",
+      "path": "agents/dario-amodei.md"
+    },
+    {
+      "name": "doc-simplifier",
+      "description": "Use this agent when you have functional documentation that's too verbose and needs condensing to improve clarity and reduce cognitive load. Examples: <example>Context: User has a technical research document that's 1200+ lines with repetitive sections. user:",
+      "type": "agent",
+      "path": "agents/doc-simplifier.md"
+    },
+    {
+      "name": "kotlin-pro",
+      "description": ">",
+      "type": "agent",
+      "path": "agents/kotlin-pro.md"
+    },
+    {
+      "name": "red-team",
+      "description": "<use_when>\\n  <description>Use this agent when you need systematic security testing, threat modeling, adversary emulation, vulnerability assessment, or security validation. Covers both traditional cybersecurity red teaming (MITRE ATT&CK, penetration testing) and modern AI/LLM security testing (prompt injection, jailbreaking, OWASP Top 10 LLM).</description>\\n  \\n  <example>\\n    <context>User is tasked with assessing organization's security posture and needs structured red team planning</context>\\n    <user>",
+      "type": "agent",
+      "path": "agents/red-team.md"
+    },
+    {
+      "name": "sam-altman",
+      "description": "Use this agent when you need velocity-first, market-driven decision-making with transformational leadership and aggressive execution strategies. Examples: <example>Context: User needs to decide on product launch timing. user: 'Should we delay the launch to add more safety features?' assistant: 'I'll engage the sam-altman agent to evaluate the velocity-risk tradeoff' <commentary>Since this involves balancing speed-to-market with risk management, use the sam-altman agent to provide perspective on aggressive execution while managing downsides.</commentary></example> <example>Context: User planning market entry strategy. user: 'How should we position ourselves against competitors in the AI space?' assistant: 'Let me use the sam-altman agent for competitive strategy guidance' <commentary>Since this requires understanding market dynamics and aggressive positioning, use the sam-altman agent to provide insights on capturing market share and building competitive moats.</commentary></example> <example>Context: User facing organizational governance decisions. user: 'Our board wants more control over product decisions' assistant: 'I'll engage the sam-altman agent to navigate governance dynamics' <commentary>Since this involves balancing stakeholder interests with execution velocity, use the sam-altman agent to provide perspective on maintaining decisional authority while managing relationships.</commentary></example>",
+      "type": "agent",
+      "path": "agents/sam-altman.md"
+    },
+    {
+      "name": "seo-manager",
+      "description": "Intelligent social media SEO content orchestration. Use this subagent when users need: (1) Platform-specific content optimization (Instagram, X/Twitter, Threads), (2) Multi-database querying for caption formulas, thread structures, viral patterns, (3) A/B test variation generation, (4) Evidence-based recommendations with metrics, or (5) Comprehensive SEO strategy for social media posts. Examples: <example>Context: User wants optimized Instagram caption for educational content. user: 'Create Instagram caption about SEO tips for high engagement' assistant: 'I'll use the seo-manager subagent to query our proven formula databases and generate optimized variations' <commentary>Since this requires querying caption-styles.csv, hook-formulas.csv, and synthesizing platform-specific optimization, use seo-manager for data-driven recommendations.</commentary></example> <example>Context: User needs viral Twitter thread structure. user: 'Help me structure a Twitter thread about content marketing' assistant: 'Let me use the seo-manager subagent to recommend proven thread architectures' <commentary>Since this involves querying thread-structures.csv and applying X/Twitter-specific SEO principles, use seo-manager proactively.</commentary></example> <example>Context: User wants multiple caption variations to A/B test. user: 'Generate 3 different Instagram captions for my product launch' assistant: 'I'll engage the seo-manager subagent to create variations from different proven styles' <commentary>Since this requires multi-database querying and variation generation, use seo-manager to provide evidence-based options.</commentary></example>",
+      "type": "agent",
+      "path": "agents/seo-manager.md"
+    }
+  ],
+  "generatedAt": "2026-03-14T17:51:24.215Z"
+}
