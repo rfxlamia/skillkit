@@ -6,13 +6,13 @@
     "name": "rfxlamia",
     "email": "rfxlamia@github.com"
   },
-  "subagents": [
-    "../../agents/creative-copywriter.md",
-    "../../agents/seo-manager.md",
-    "../../agents/dario-amodei.md",
-    "../../agents/sam-altman.md",
-    "../../agents/kotlin-pro.md",
-    "../../agents/doc-simplifier.md",
-    "../../agents/red-team.md"
+  "agents": [
+    "agents/seo-manager.md",
+    "agents/creative-copywriter.md",
+    "agents/red-team.md",
+    "agents/doc-simplifier.md",
+    "agents/sam-altman.md",
+    "agents/dario-amodei.md",
+    "agents/kotlin-pro.md"
   ]
 }
