@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'installer/**'
+      - 'skills/**'
+      - 'agents/**'
+  pull_request:
+    paths:
+      - 'installer/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: cd installer && npm ci
+      - run: cd installer && npm test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: cd installer && npm ci
+      - run: cd installer && npx eslint src/
+
+  verify-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: node scripts/generate-manifest.js
+      - run: git diff --exit-code installer/skills-manifest.json
