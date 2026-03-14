@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.1.3] - 2026-03-14
+
+### Fixed
+- Add commands/ folder for slash command registration (/skillkit, /verify, /validate-plan)
+- Fix bundle structure to include actual skill files instead of broken relative paths
+- Fix frameworks bundle missing all skills (now has 4 skills + references)
+- Fix essentials bundle (now has 9 skills + references)
+- Fix creative bundle (now has 6 skills + references)
+- Fix subagents bundle (now has 7 agent files)
+
+### Added
+- Plugin installation test script (scripts/test-plugin-install.sh)
+
+### Summary
+Plugin structure completely rebuilt. All bundles now contain actual skill files instead of broken relative path references. Slash commands now work with commands/ folder.
+
 ## [2.1.2] - 2025-03-14
 
 ### Added
