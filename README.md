@@ -5,7 +5,7 @@
 > **Previously known as `claude-skillkit`.** All old links redirect here automatically.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.1.0-green.svg)](.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-2.1.2-green.svg)](.claude-plugin/plugin.json)
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-red?logo=githubsponsors)](https://github.com/sponsors/rfxlamia)
 
 ---

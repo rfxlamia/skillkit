@@ -7,15 +7,15 @@
     "email": "rfxlamia@github.com"
   },
   "metadata": {
-    "version": "2.1.1",
-    "description": "Skillkit v2.1 introduces Full Mode Behavioral Testing Protocol with TDD-style RED-GREEN-REFACTOR cycle, deprecates legacy pressure_tester.py in favor of subagent-based pressure testing."
+    "version": "2.1.2",
+    "description": "Professional skill and subagent creation toolkit with dual-mode workflow (fast/full), behavioral validation, and quality gates for 9.0/10+ scores."
   },
   "plugins": [
     {
       "name": "skillkit-core",
       "description": "Professional skill and subagent creation with dual-mode workflow: 12-step fast mode and 15-step full mode with behavioral pressure testing and TDD integration.",
       "source": "./skills/skillkit",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "author": {
         "name": "rfxlamia"
       },
