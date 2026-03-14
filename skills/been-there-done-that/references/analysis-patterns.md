@@ -108,7 +108,7 @@ Rust systems           → Rust backend, async Rust, SQLx, Actix
 ```
 🎯 Portfolio: Solo delivery — Yagura Phase 1 live at yagura.space (auth + realtime + calendar)
 🎯 Portfolio: Production GPS tracking system for agricultural mandors, handling concurrent sessions
-🎯 Portfolio: Open-source CLI (claude-skillkit) with GitHub traction and external adoption
+🎯 Portfolio: Open-source CLI (skillkit) with GitHub traction and external adoption
 ```
 
 **Do NOT generate portfolio note for:**

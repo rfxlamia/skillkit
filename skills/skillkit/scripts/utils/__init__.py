@@ -1,5 +1,5 @@
 """
-Shared utilities for claude-skillkit automation scripts.
+Shared utilities for skillkit automation scripts.
 
 Modules:
 - output_formatter: Standardized JSON/text output (v1.0)

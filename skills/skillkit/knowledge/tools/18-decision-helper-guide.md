@@ -240,4 +240,4 @@ test -f ./tmp/skillkit/answers.json && python3 -m json.tool < ./tmp/skillkit/ans
 
 ---
 
-**Status:** Ã¢Å“â€¦ Production-ready | **Version:** 1.0 | **Integration:** Ready for claude-skillkit
+**Status:** Ã¢Å“â€¦ Production-ready | **Version:** 1.0 | **Integration:** Ready for skillkit

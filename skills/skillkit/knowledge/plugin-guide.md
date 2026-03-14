@@ -489,7 +489,7 @@ Step 10: [OPTIONAL] Plugin distribution setup
 
 ## Real-World Example
 
-**Repository:** github.com/rfxlamia/claude-skillkit
+**Repository:** github.com/rfxlamia/skillkit
 
 **What worked:**
 ✅ `"source": "./"` for repository root reference
