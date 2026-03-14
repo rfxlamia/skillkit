@@ -1,0 +1,31 @@
+{
+  "name": "@rfxlamia/skillkit",
+  "version": "1.0.0",
+  "description": "Interactive CLI installer for SkillKit — Claude Code skills & agents",
+  "type": "module",
+  "bin": {
+    "skillkit": "./bin/skillkit.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "skills-manifest.json"
+  ],
+  "scripts": {
+    "test": "node --test src/**/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rfxlamia/skillkit.git",
+    "directory": "installer"
+  },
+  "homepage": "https://github.com/rfxlamia/skillkit",
+  "license": "Apache-2.0",
+  "keywords": ["claude-code", "skills", "ai-agent", "skillkit"]
+}
