@@ -111,24 +111,52 @@ The `skillkit` skill is the engine that powers creation of new skills and subage
 
 The most reliable way to install SkillKit is to copy skill content directly into your Claude Code skills directory.
 
-Copy individual skills into `~/.claude/skills/`:
+**Skills** → copy into `~/.claude/skills/`:
+
+| Skill | Directory |
+|-------|-----------|
+| skillkit | [skills/skillkit](https://github.com/rfxlamia/skillkit/tree/main/skills/skillkit) |
+| prompt-engineering | [skills/prompt-engineering](https://github.com/rfxlamia/skillkit/tree/main/skills/prompt-engineering) |
+| creative-copywriting | [skills/creative-copywriting](https://github.com/rfxlamia/skillkit/tree/main/skills/creative-copywriting) |
+| social-media-seo | [skills/social-media-seo](https://github.com/rfxlamia/skillkit/tree/main/skills/social-media-seo) |
+| thread-pro | [skills/thread-pro](https://github.com/rfxlamia/skillkit/tree/main/skills/thread-pro) |
+| humanize-docs | [skills/humanize-docs](https://github.com/rfxlamia/skillkit/tree/main/skills/humanize-docs) |
+| imagine | [skills/imagine](https://github.com/rfxlamia/skillkit/tree/main/skills/imagine) |
+| storyteller | [skills/storyteller](https://github.com/rfxlamia/skillkit/tree/main/skills/storyteller) |
+| screenwriter | [skills/screenwriter](https://github.com/rfxlamia/skillkit/tree/main/skills/screenwriter) |
+| diverse-content-gen | [skills/diverse-content-gen](https://github.com/rfxlamia/skillkit/tree/main/skills/diverse-content-gen) |
+| coolhunter | [skills/coolhunter](https://github.com/rfxlamia/skillkit/tree/main/skills/coolhunter) |
+| framework-critical-thinking | [skills/framework-critical-thinking](https://github.com/rfxlamia/skillkit/tree/main/skills/framework-critical-thinking) |
+| framework-initiative | [skills/framework-initiative](https://github.com/rfxlamia/skillkit/tree/main/skills/framework-initiative) |
+| baby-education | [skills/baby-education](https://github.com/rfxlamia/skillkit/tree/main/skills/baby-education) |
+| readme-expert | [skills/readme-expert](https://github.com/rfxlamia/skillkit/tree/main/skills/readme-expert) |
+| red-teaming | [skills/red-teaming](https://github.com/rfxlamia/skillkit/tree/main/skills/red-teaming) |
+| tinkering | [skills/tinkering](https://github.com/rfxlamia/skillkit/tree/main/skills/tinkering) |
+| quick-spec | [skills/quick-spec](https://github.com/rfxlamia/skillkit/tree/main/skills/quick-spec) |
+| pre-deploy-checklist | [skills/pre-deploy-checklist](https://github.com/rfxlamia/skillkit/tree/main/skills/pre-deploy-checklist) |
+| been-there-done-that | [skills/been-there-done-that](https://github.com/rfxlamia/skillkit/tree/main/skills/been-there-done-that) |
+| adversarial-review | [skills/adversarial-review](https://github.com/rfxlamia/skillkit/tree/main/skills/adversarial-review) |
+| releasing | [skills/releasing](https://github.com/rfxlamia/skillkit/tree/main/skills/releasing) |
+| validate-plan | [skills/validate-plan](https://github.com/rfxlamia/skillkit/tree/main/skills/validate-plan) |
+| verify-before-ship | [skills/verify-before-ship](https://github.com/rfxlamia/skillkit/tree/main/skills/verify-before-ship) |
+
+**Agents** → copy into `~/.claude/agents/`:
+
+| Agent | File |
+|-------|------|
+| seo-manager | [agents/seo-manager.md](https://github.com/rfxlamia/skillkit/blob/main/agents/seo-manager.md) |
+| creative-copywriter | [agents/creative-copywriter.md](https://github.com/rfxlamia/skillkit/blob/main/agents/creative-copywriter.md) |
+| red-team | [agents/red-team.md](https://github.com/rfxlamia/skillkit/blob/main/agents/red-team.md) |
+| doc-simplifier | [agents/doc-simplifier.md](https://github.com/rfxlamia/skillkit/blob/main/agents/doc-simplifier.md) |
+| sam-altman | [agents/sam-altman.md](https://github.com/rfxlamia/skillkit/blob/main/agents/sam-altman.md) |
+| dario-amodei | [agents/dario-amodei.md](https://github.com/rfxlamia/skillkit/blob/main/agents/dario-amodei.md) |
+| kotlin-pro | [agents/kotlin-pro.md](https://github.com/rfxlamia/skillkit/blob/main/agents/kotlin-pro.md) |
+
+**Copy all at once:**
 
 ```bash
 git clone https://github.com/rfxlamia/skillkit.git
-cp -r skillkit/skills/skillkit ~/.claude/skills/
-cp -r skillkit/skills/prompt-engineering ~/.claude/skills/
-# ... repeat for any skill you want
-```
-
-Or copy all skills at once:
-
-```bash
 cp -r skillkit/skills/. ~/.claude/skills/
-```
-
-For agents, copy into `~/.claude/agents/`:
-
-```bash
 cp skillkit/agents/. ~/.claude/agents/
 ```
 
