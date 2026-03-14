@@ -9,9 +9,13 @@
   "files": [
     "bin/",
     "src/",
-    "skills-manifest.json"
+    "skills-manifest.json",
+    "skills/",
+    "agents/"
   ],
   "scripts": {
+    "prepublishOnly": "node ../scripts/generate-manifest.js && cp -r ../skills ./skills && cp -r ../agents ./agents",
+    "postpublish": "rm -rf ./skills ./agents",
     "test": "node --test src/**/*.test.js"
   },
   "engines": {

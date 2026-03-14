@@ -1,0 +1,11 @@
+# Tests
+tests/
+**/*.test.js
+
+# Development
+.github/
+.eslintrc
+.prettierrc
+
+# Documentation (keep README.md)
+docs/
