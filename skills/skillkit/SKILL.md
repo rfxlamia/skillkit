@@ -164,36 +164,7 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
 
 **CRITICAL: Agent MUST create a temp JSON file first.** The `decision_helper.py` script does NOT accept inline JSON strings - it requires a file path to a JSON file.
 
-**Step-by-step workflow (REQUIRED):**
-
-```bash
-# STEP 1: Create temp directory (from repository root)
-mkdir -p ./tmp/skillkit
-
-# STEP 2: Create JSON file with answers (REQUIRED - cannot be inline)
-cat > ./tmp/skillkit/decision-answers.json <<'EOF'
-{
-  "utility_task": false,
-  "multi_step": true,
-  "reusable": false,
-  "specialized_personality": true,
-  "missing_knowledge": false,
-  "coordination": true,
-  "isolated_context": true,
-  "clutter_chat": true
-}
-EOF
-
-# STEP 3: Call decision helper with FILE PATH (not JSON string)
-cd skills/skillkit && source venv/bin/activate
-python scripts/decision_helper.py --answers ../../tmp/skillkit/decision-answers.json
-```
-
-**Required JSON structure:**
-
-- 8 keys (exact names): `utility_task`, `multi_step`, `reusable`, `specialized_personality`, `missing_knowledge`, `coordination`, `isolated_context`, `clutter_chat`
-- All values MUST be boolean (`true` or `false`), not strings
-- Missing/extra keys will cause validation error
+**Step-by-step invocation:** See `references/section-4-decision-workflow-skills-vs-subagents.md`
 
 **Accuracy:** Highest (90-95% confidence).
 
