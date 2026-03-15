@@ -26,12 +26,15 @@ test('All source modules exist and export expected functions', async () => {
   const picker = await import('../src/picker.js')
   const install = await import('../src/install.js')
   const update = await import('../src/update.js')
+  const tools = await import('../src/tools.js')
 
-  assert.ok(banner, 'banner module loads')
-  assert.ok(scope, 'scope module loads')
-  assert.ok(picker, 'picker module loads')
-  assert.ok(install, 'install module loads')
-  assert.ok(update, 'update module loads')
+  assert.ok(banner.printBanner, 'banner exports printBanner')
+  assert.ok(scope.selectScope, 'scope exports selectScope')
+  assert.ok(picker.pickInstallables, 'picker exports pickInstallables')
+  assert.ok(install.installSelected, 'install exports installSelected')
+  assert.ok(update.checkForUpdates, 'update exports checkForUpdates')
+  assert.ok(tools.selectTools, 'tools exports selectTools')
+  assert.ok(tools.getToolTargets, 'tools exports getToolTargets')
 })
 
 test('package.json has required fields', () => {

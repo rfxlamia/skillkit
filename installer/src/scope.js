@@ -1,57 +1,26 @@
+// installer/src/scope.js
 import { select, log } from '@clack/prompts'
-import { homedir } from 'os'
-import { join } from 'path'
-import { existsSync } from 'fs'
 
-export async function selectScope() {
-  const userSkillsPath = join(homedir(), '.claude', 'skills')
-  const projectSkillsPath = join(process.cwd(), '.claude', 'skills')
-  const projectExists = existsSync(join(process.cwd(), '.claude', 'skills'))
-
+export async function selectScope(selectedTools = []) {
   const scope = await select({
     message: 'Install to:',
     options: [
       {
         value: 'user',
-        label: `User scope  ~/.claude/skills/`,
+        label: 'User scope',
         hint: 'available in all projects'
       },
       {
         value: 'project',
-        label: `Project scope  ./.claude/skills/`,
-        hint: projectExists ? 'detected .claude/skills/ here' : `will create ${projectSkillsPath}`
+        label: 'Project scope',
+        hint: 'this project only'
       }
     ]
   })
 
-  if (scope === 'user') {
-    return {
-      scope: 'user',
-      skillsDir: userSkillsPath,
-      agentsDir: join(homedir(), '.claude', 'agents')
-    }
+  if (selectedTools.includes('codex') && scope === 'project') {
+    log.warn('Codex does not support project scope — skills will be installed to ~/.agents/skills/skillkit/')
   }
 
-  return {
-    scope: 'project',
-    skillsDir: projectSkillsPath,
-    agentsDir: join(process.cwd(), '.claude', 'agents')
-  }
-}
-
-// Export for testing
-export function getUserScope() {
-  return {
-    scope: 'user',
-    skillsDir: join(homedir(), '.claude', 'skills'),
-    agentsDir: join(homedir(), '.claude', 'agents')
-  }
-}
-
-export function getProjectScope() {
-  return {
-    scope: 'project',
-    skillsDir: join(process.cwd(), '.claude', 'skills'),
-    agentsDir: join(process.cwd(), '.claude', 'agents')
-  }
+  return scope
 }

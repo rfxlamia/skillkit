@@ -5,6 +5,6 @@ export function printBanner(version) {
 ███▄▄ ██▄█▀ ██ ██    ██    ██▄█▀ ██   ██
 ▄▄██▀ ██ ██ ██ ██▄▄▄ ██▄▄▄ ██ ██ ██   ██
 \x1b[0m
-\x1b[90mv${version} · Claude Code Skills Installer\x1b[0m
+\x1b[90mv${version} · Multi-Tool Skills Installer\x1b[0m
 `)
 }
