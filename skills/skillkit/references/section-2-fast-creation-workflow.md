@@ -126,11 +126,10 @@ echo "Lines: $lines"
 
 **Tool:** `python3 scripts/split_skill.py skill-name/ --format json`
 
-```
-IF >350 lines → SPLIT to references/
-IF 200–350   → OPTIMAL
-IF <200      → CHECK if content is sufficient
-```
+**Gates:**
+- IF >350 lines → SPLIT to references/ via `scripts/split_skill.py`
+- IF 200–350 lines → OPTIMAL, proceed
+- IF <200 lines → CHECK if content is sufficient
 
 **Guide:** `knowledge/tools/20-split-skill-guide.md`
 
@@ -157,7 +156,7 @@ IF <200      → CHECK if content is sufficient
 - 8.0–8.9 → REVIEW improvements
 - <8.0 → MUST improve before packaging
 
-**Note:** 7.5/10 is realistic for most skills. 9.0+ may require manual polish.
+**Note:** 7.5/10 is the minimum to package (Step 11 checklist). The >=9.0 gate above is aspirational — if score is 7.5–8.9, review improvements but proceed if changes would not meaningfully raise quality.
 
 **Guide:** `knowledge/tools/21-quality-scorer-guide.md`
 
