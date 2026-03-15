@@ -31,7 +31,7 @@ export async function pickInstallables() {
   const mode = await select({
     message: 'What to install?',
     options: [
-      { value: 'all', label: 'Everything (24 skills + 7 agents)' },
+      { value: 'all', label: `Everything (${manifest.skills.length} skills + ${manifest.agents.length} agents)` },
       { value: 'skills-only', label: 'All skills only' },
       { value: 'agents-only', label: 'All agents only' },
       { value: 'pick', label: 'Let me choose...' }
@@ -42,8 +42,13 @@ export async function pickInstallables() {
   if (mode === 'skills-only') return { skills: manifest.skills, agents: [] }
   if (mode === 'agents-only') return { skills: [], agents: manifest.agents }
 
-  // Manual pick
-  const skillChoices = manifest.skills.map(s => ({
+  const sortedSkills = [...manifest.skills].sort((a, b) => {
+    if (a.name === 'skillkit') return -1
+    if (b.name === 'skillkit') return 1
+    return a.name.localeCompare(b.name)
+  })
+
+  const skillChoices = sortedSkills.map(s => ({
     value: s.name,
     label: `${getCategoryDisplay(s)} ${s.name}`,
     hint: s.description.slice(0, 60) + (s.description.length > 60 ? '…' : '')
@@ -68,7 +73,7 @@ export async function pickInstallables() {
   })
 
   return {
-    skills: manifest.skills.filter(s => selectedSkills.includes(s.name)),
+    skills: sortedSkills.filter(s => selectedSkills.includes(s.name)),
     agents: manifest.agents.filter(a => selectedAgents.includes(a.name))
   }
 }
