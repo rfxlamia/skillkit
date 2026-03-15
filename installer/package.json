@@ -1,6 +1,6 @@
 {
   "name": "@rfxlamia/skillkit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Interactive CLI installer for SkillKit — Claude Code skills & agents",
   "type": "module",
   "bin": {
@@ -31,5 +31,10 @@
   },
   "homepage": "https://github.com/rfxlamia/skillkit",
   "license": "Apache-2.0",
-  "keywords": ["claude-code", "skills", "ai-agent", "skillkit"]
+  "keywords": [
+    "claude-code",
+    "skills",
+    "ai-agent",
+    "skillkit"
+  ]
 }
