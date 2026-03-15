@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.4.0] - 2026-03-15
+
+### Added
+- `skillkit-help` skill: pre-build orientation for new skill creators (understand skills, decide skills vs subagents, validate existing skills)
+- Starter template at `skills/skillkit-help/template/SKILL.md` for first-time creators
+- GitHub PR submission template at `.github/PULL_REQUEST_TEMPLATE/skill_submission.md`
+- `sortSkills` exported pure function in installer picker (testable, `skillkit-help` pinned second)
+
+### Changed
+- README hero rewritten to be platform-agnostic (works across Claude Code, Codex, and other AI coding tools)
+- Added "Create Your First Skill" onboarding section to README
+- Skills catalog updated to 25 skills
+
+---
+
 ## [2.3.0] - 2026-03-15
 
 ### Added
