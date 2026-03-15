@@ -163,13 +163,13 @@ Quality target: **9.0+/10** via 5-layer validation and multi-proposal generation
 
 <!-- TODO: Replace with actual screenshots -->
 **CLI installer**
-![installer](/home/v/project/skillkit/docs/images/installer.png)
+![installer](docs/images/installer.png)
 
 **Guided orientation**
-![skillkit-help](/home/v/project/skillkit/docs/images/skillkit-help.png)
+![skillkit-help](docs/images/skillkit-help.png)
 
 **A finished skill**
-![skill](/home/v/project/skillkit/docs/images/skill.png)
+![skill](docs/images/skill.png)
 
 ---
 
