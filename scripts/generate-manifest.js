@@ -39,6 +39,6 @@ const agents = readdirSync(join(root, 'agents'))
     return { name, description, type: 'agent', path: `agents/${file}` }
   })
 
-const manifest = { skills, agents, generatedAt: new Date().toISOString() }
+const manifest = { skills, agents }
 writeFileSync(join(root, 'installer', 'skills-manifest.json'), JSON.stringify(manifest, null, 2))
 console.log(`Generated manifest: ${skills.length} skills, ${agents.length} agents`)
