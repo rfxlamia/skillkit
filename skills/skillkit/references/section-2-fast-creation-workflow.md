@@ -140,7 +140,9 @@ IF <200      → CHECK if content is sufficient
 
 **Tool:** `python3 scripts/test_generator.py skill-name/ --test-format pytest --format json`
 
-Generates automated tests for structural validation.
+**Gates:**
+- IF tests generated → REVIEW output, PROCEED Step 10
+- IF generation fails → CHECK skill structure, re-run validate_skill.py first
 
 **Guide:** `knowledge/tools/19-test-generator-guide.md`
 
