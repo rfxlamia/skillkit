@@ -1,13 +1,12 @@
 ---
 name: skillkit
 description: >
-  Research-driven toolkit for creating and validating skills and subagents with
-  structured workflows, gates, and automation scripts.
-  Use for: create skill, create subagent, validate skill quality, decide Skills
-  vs Subagents, migrate docs to skills, estimate token cost, and security scan.
-  Includes proposal generation, quality scoring, progressive disclosure checks,
-  and packaging support. Built for consistent high-quality outputs with
-  reusable scripts and production-tested tooling.
+  Toolkit for creating and validating skills and subagents.
+  Use when: creating a new skill (fast or full mode), validating an
+  existing skill, deciding Skills vs Subagents, migrating docs to skills,
+  estimating token cost, or running a security scan.
+  Triggers: "create skill", "build skill", "validate skill", "new subagent",
+  "skills vs subagents", "estimate tokens", "security scan".
 category: core
 ---
 
@@ -26,8 +25,8 @@ category: core
 **PROCEED to corresponding section after intent detection.**
 
 **Stop Condition (Mandatory):**
-- If multiple routes match, or intent is ambiguous, agent MUST stop and ask user to choose one route.
-- Agent MUST NOT proceed until user confirms the route.
+- If multiple routes match or intent is ambiguous: stop, ask user to choose one route.
+- Do not proceed until user confirms the route.
 
 **Workflow Value:** Research-driven approach validates design before building.
 Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
@@ -40,12 +39,11 @@ Sequential steps with checkpoints produce 9.0/10+ quality vs ad-hoc creation.
 
 ### Mode Selection (Required at Start)
 
-Agent MUST detect or prompt for workflow mode before running the creation flow.
+Detect or prompt for workflow mode before running the creation flow.
 
 **Stop Condition (Mandatory):**
-- If mode is not explicitly provided by user, agent MUST stop and ask:
-  "Do you want to use fast-mode or full mode?"
-- Agent MUST NOT continue creation workflow until user confirms the mode.
+- If mode is not explicitly provided: stop and ask "Do you want fast or full mode?"
+- Do not continue until user confirms the mode.
 
 | Mode | Steps | Validation | Quality Target | Time |
 |------|-------|------------|----------------|------|
@@ -58,40 +56,25 @@ No implicit default mode is allowed when mode is not explicitly known.
 
 Use when `.skillkit-mode` contains `fast` or marker does not exist.
 
-Phase 1: Decision and Research
-- Step 0: Decide approach (`decision_helper.py`)
-- Step 1: Research and proposals
-- Step 2: User validation
-- Stop Condition: Agent MUST stop and request user approval before continuing to Step 3.
+**→ READ `references/section-2-fast-creation-workflow.md` IN FULL before starting.**
+**Create a task for each step listed in that file, then follow them in order.**
+The outline below is a summary only — the reference file is authoritative.
 
-Phase 2: Creation
-- Step 3: Initialize skill (`init_skill.py --mode fast`)
-- Step 4: Create content
-
-Phase 3: Structural Validation
-- Step 5: Validate structure (`validate_skill.py`)
-- Step 6: Security audit (`security_scanner.py`)
-- Step 7: Token optimization (`token_estimator.py`)
-
-Phase 4: Packaging
-- Step 8: Progressive disclosure check
-- Step 9: Generate tests (`test_generator.py`)
-- Step 10: Quality assessment (`quality_scorer.py`)
-- Step 11: Package (`package_skill.py`)
+Phase 1: Decision & Research → Phase 2: Creation → Phase 3: Structural Validation → Phase 4: Packaging
 
 ### Workflow B: Full Mode (16 Steps)
 
 Use when `.skillkit-mode` contains `full`.
 
 **→ READ `references/section-2-full-creation-workflow.md` IN FULL before starting.**
-**Create a TodoWrite task for each step listed in that file, then follow them in order.**
+**Create a task for each step listed in that file, then follow them in order.**
 The outline below is a summary only — the reference file is authoritative.
 
 Phase 1: Decision and Research
 - Step 0: Decide approach (`decision_helper.py`)
 - Step 1: Research and proposals
 - Step 2: User validation
-- Stop Condition: Agent MUST stop and request user approval before continuing to Step 3.
+- Stop Condition: Stop and request user approval before continuing to Step 3.
 
 Phase 2: Behavioral Baseline (extra vs fast)
 - Step 3 (RED): Run pressure scenarios without skill
@@ -123,22 +106,10 @@ Phase 7: Packaging
 
 ### Mode Detection
 
-Mode detection priority:
+Priority order:
 1. Explicit flag: `--mode fast` or `--mode full`
-2. Skill marker: `.skillkit-mode` file
-3. If still unknown: stop and ask user to choose `fast` or `full`
-
-```python
-def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
-    if cli_flag:
-        return cli_flag
-
-    marker_file = Path(skill_path) / ".skillkit-mode"
-    if marker_file.exists():
-        return marker_file.read_text().strip()
-
-    raise ValueError("Mode unknown. Ask user: fast-mode or full mode?")
-```
+2. Skill marker: `.skillkit-mode` file content
+3. If unknown: stop and ask user to choose `fast` or `full`
 
 ---
 
@@ -198,7 +169,7 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
 - Tool: `python scripts/init_subagent.py subagent-name --path ~/.claude/agents`
 - Creates: `~/.claude/agents/subagent-name.md` with template
 - **Important:** Subagents are individual `.md` files (not directories)
-- Stop Condition: If target file already exists, agent MUST stop and ask whether to overwrite, rename, or cancel.
+- Stop Condition: If target file already exists, stop and ask whether to overwrite, rename, or cancel.
 
 **STEP 2: Define Configuration**
 - Edit YAML frontmatter (name, description, type, tools, skills)
@@ -230,7 +201,7 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
 **STEP 8: Documentation & Deployment**
 - Create README.md
 - Register in system
-- Stop Condition: Agent MUST ask for explicit user confirmation before register/deploy actions.
+- Stop Condition: Ask for explicit user confirmation before register/deploy actions.
 
 **For detailed workflow:** [See references/section-6-subagent-creation-workflow.md](references/section-6-subagent-creation-workflow.md)
 
@@ -248,8 +219,8 @@ def detect_mode(skill_path: str, cli_flag: Optional[str] = None) -> str:
 5. Package (Step 9)
 
 **Stop Condition (Mandatory):**
-- Before structure creation or any overwrite/write operation, agent MUST ask user confirmation.
-- Agent MUST NOT modify files until user confirms.
+- Before structure creation or any write/overwrite operation: ask user confirmation.
+- Do not modify files until user confirms.
 
 **For detailed workflow:** [See references/section-5-migration-workflow-doc-to-skill.md](references/section-5-migration-workflow-doc-to-skill.md)
 
@@ -342,13 +313,9 @@ Guide: `references/section-6-subagent-creation-workflow.md`
 
 ### Tool Output Standardization (v1.0.1+)
 
-**All 9 tools now support `--format json` parameter:**
-- ✅ Consistent JSON schema across all automation tools
-- ✅ Parseable with `python -m json.tool` for validation
-- ✅ Backward compatible - text mode still available as default (or via `--format text`)
-- ✅ Agent-layer tools (decision_helper) default to JSON for automation
+All 9 tools support `--format json`. Text mode still available via `--format text` (backward compatible). `decision_helper` defaults to JSON for automation.
 
-**JSON Output Structure (Standardized):**
+**JSON Output Structure:**
 ```json
 {
   "status": "success" | "error",
@@ -385,33 +352,6 @@ Guide: `references/section-6-subagent-creation-workflow.md`
 
 ## Section 8: Mode Selection Guide
 
-### When to Use Fast Mode
-
-Use fast mode when:
-- simple utility or conversion skills
-- quick prototypes
-- API or reference-focused skills
-- internal tooling with low behavioral risk
-
-Do not use fast mode when:
-- skill enforces discipline (TDD, strict verification, no-shortcut rules)
-- skill has many decision points and loophole risk
-- production-grade compliance is mandatory
-
-### When to Use Full Mode
-
-Use full mode when:
-- discipline enforcement is core behavior
-- workflow is multi-step and error-sensitive
-- skill will be reused broadly by multiple agents
-- quality and compliance are both critical
-
-Full mode may be overkill for:
-- very small one-step techniques
-- personal one-off reference notes
-
-### Decision Matrix
-
 | Skill Type | Recommended Mode | Why |
 |------------|------------------|-----|
 | TDD or discipline skill | **full** | must resist rationalization under pressure |
@@ -419,6 +359,8 @@ Full mode may be overkill for:
 | API reference skill | **fast** | primarily retrieval accuracy |
 | Workflow orchestration skill | **full** | complex flow benefits from pressure checks |
 | Debugging technique skill | **fast** | concise technique with clear method |
+
+Full mode adds behavioral testing (pressure scenarios). Use it when discipline enforcement is core to the skill's purpose.
 
 ---
 
@@ -449,34 +391,17 @@ Full mode may be overkill for:
 
 ---
 
-## Workflow Compliance Reinforcement
-**This skill works best when workflows are followed sequentially.**
+## Workflow Compliance
 
-**Why compliance matters:**
-1. Research validation reduces iteration (validate before build)
-2. Security checks prevent vulnerabilities (catch issues early)
-3. Token optimization ensures efficiency (avoid bloat)
-4. Quality gates maintain standards (9.0/10+ target)
+Follow workflows sequentially. Sequential steps with gates produce 9.0/10+ quality. Deviations are allowed with user justification.
 
-**Mechanisms encouraging compliance:**
-- Frontmatter priming: "WORKFLOW COMPLIANCE" statement
-- Section routing: Explicit "PROCEED to Section X"
-- Validation gates: IF/THEN with checkpoints
-- Quality target: ">=9.0/10 requires following workflow"
-
-**Flexible when needed:**
-- Single tool usage (Section 7) skips full workflow
-- Validation-only (Section 3) runs subset of steps
-- Subagent creation (Section 6) has streamlined workflow
-- User can request deviations with justification
-
-**Goal:** Strong encouragement through design, not strict enforcement.
+**Flexible entry points:**
+- Single tool (Section 7): skip full workflow
+- Validation only (Section 3): run validation subset
+- Subagent (Section 6): streamlined 8-step workflow
 
 ---
 
 ## Additional Resources
 
-**Detailed implementations available in references/ directory:**
-
-All section overviews above link to detailed reference files for deep-dive information.
-Load references on-demand when detailed implementation guidance needed.
+Load reference files on-demand from `references/` when detailed implementation guidance is needed.
