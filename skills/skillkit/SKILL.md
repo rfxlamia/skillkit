@@ -60,7 +60,26 @@ Use when `.skillkit-mode` contains `fast` or marker does not exist.
 **Create a task for each step listed in that file, then follow them in order.**
 The outline below is a summary only — the reference file is authoritative.
 
-Phase 1: Decision & Research → Phase 2: Creation → Phase 3: Structural Validation → Phase 4: Packaging
+Phase 1: Decision & Research
+- Step 0: Decide approach (`decision_helper.py`)
+- Step 1: Research and proposals
+- Step 2: User validation
+- Stop Condition: Stop and request user approval before continuing to Step 3.
+
+Phase 2: Creation
+- Step 3: Initialize skill (`init_skill.py --mode fast`)
+- Step 4: Create content
+
+Phase 3: Structural Validation
+- Step 5: Validate structure (`validate_skill.py`)
+- Step 6: Security audit (`security_scanner.py`)
+- Step 7: Token optimization (`token_estimator.py`)
+
+Phase 4: Packaging
+- Step 8: Progressive disclosure check
+- Step 9: Generate tests (`test_generator.py`)
+- Step 10: Quality assessment (`quality_scorer.py`)
+- Step 11: Package (`package_skill.py`)
 
 ### Workflow B: Full Mode (16 Steps)
 

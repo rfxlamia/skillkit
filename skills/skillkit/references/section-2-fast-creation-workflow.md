@@ -37,7 +37,7 @@
 
 ### STEP 2: User Validation
 
-**Purpose:** Confirm proposal before execution planning
+**Purpose:** Confirm proposal before content creation
 
 **Stop Condition (Mandatory):** Stop and request user approval before continuing to Step 3.
 
@@ -55,7 +55,7 @@
 - IF target path already exists → STOP, ask user: overwrite, rename, or cancel
 - IF init succeeds → PROCEED Step 4
 
-**Guide:** `knowledge/tools/22-migration-helper.md` (if converting from existing doc)
+**Guide:** `knowledge/tools/22-migration-helper-guide.md` (if converting from existing doc)
 
 ---
 
@@ -64,7 +64,7 @@
 **Purpose:** Write SKILL.md and reference files per approved blueprint
 
 **Process:**
-1. Load execution plan from Step 1 (P0/P1/P2 priorities)
+1. Assign priorities inline: label each planned file as P0 (critical), P1 (important), or P2 (optional)
 2. Create files in strict priority order: all P0 → all P1 → P2 placeholders
 3. P0 files: >=80 lines each. P1 files: >=40 lines each. P2: `# TBD` placeholder OK.
 4. Verify line count after each P0/P1 file before proceeding to next
@@ -117,6 +117,7 @@ echo "Lines: $lines"
 - >5000 → MUST split via `scripts/split_skill.py`
 
 **Knowledge:** `knowledge/foundation/05-token-economics.md`
+**Guide:** `knowledge/tools/15-cost-tools-guide.md`
 
 ---
 
