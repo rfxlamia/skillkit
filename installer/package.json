@@ -1,6 +1,6 @@
 {
   "name": "@rfxlamia/skillkit",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Interactive CLI installer for SkillKit — Claude Code skills & agents",
   "type": "module",
   "bin": {
