@@ -48,7 +48,7 @@ For non-photographic styles, read the relevant artstyle reference file first, th
 
 **Before creating any artistic/stylized prompts, ALWAYS list available artstyle files:**
 
-Use bash to check: `ls /mnt/skills/user/imagine/references/artstyle-*.md`
+Use bash to check: `ls references/`
 
 This returns all available artstyle reference files. Present the list to the user so they can choose, or intelligently select based on their request.
 
@@ -134,7 +134,7 @@ Start simple, layer details progressively:
 
 1. **Determine type**: Photography, artistic style, or hybrid?
 2. **If using art style**: 
-   - List available artstyles: `ls /mnt/skills/user/imagine/references/artstyle-*.md`
+   - List available artstyles: `ls references/`
    - Select appropriate style (by user choice or inference)
    - Read complete `references/artstyle-[name].md` file
 3. **Build foundation**: Establish subject clearly and early
