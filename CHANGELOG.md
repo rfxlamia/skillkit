@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.5.1] - 2026-03-21
+
+### Fixed
+- `package_skill.py`: default output now saves `.skill` file inside the skill's own folder instead of CWD or parent directory
+- `package_skill.py`: added `*.skill` exclusion filter to prevent self-inclusion on subsequent packaging runs
+- `package_skill.py`: success message now shows absolute path and claude.ai usage hint
+- `package_skill.py`: removed dead `is_project_directory()` function (was no longer reachable)
+
+---
+
 ## [2.5.0] - 2026-03-16
 
 ### Added

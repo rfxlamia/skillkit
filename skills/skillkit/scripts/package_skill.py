@@ -2,6 +2,11 @@
 """
 Skill Packager - Creates a distributable .skill file of a skill folder
 
+v1.3 Update: Output saved inside skill's own folder by default
+- .skill file saved to skill folder itself (not CWD or parent)
+- Excludes existing .skill files from packaging (prevents self-inclusion)
+- Success message includes absolute path and claude.ai usage hint
+
 v1.2 Update: Enhanced validation before packaging
 - Checks for broken references
 - Detects orphaned files
@@ -27,56 +32,15 @@ except ImportError:
     SkillPackageValidator = None  # Graceful fallback
 
 
-def is_project_directory(path):
-    """
-    Check if a directory appears to be a valid project directory.
-
-    A project directory is identified by common markers like:
-    - .git (git repository)
-    - package.json (Node.js project)
-    - pyproject.toml or setup.py (Python project)
-    - Cargo.toml (Rust project)
-    - go.mod (Go project)
-    - pom.xml or build.gradle (Java project)
-
-    Args:
-        path: Path object to check
-
-    Returns:
-        bool: True if directory appears to be a project directory
-    """
-    if not path.is_dir():
-        return False
-
-    project_markers = [
-        '.git',
-        'package.json',
-        'pyproject.toml',
-        'setup.py',
-        'Cargo.toml',
-        'go.mod',
-        'pom.xml',
-        'build.gradle',
-        'composer.json',  # PHP
-        'Gemfile',        # Ruby
-    ]
-
-    for marker in project_markers:
-        if (path / marker).exists():
-            return True
-
-    return False
-
-
 def package_skill(skill_path, output_dir=None, strict=False):
     """
     Package a skill folder into a .skill file.
 
-    v1.2 Enhancement: Pre-packaging reference validation
+    v1.3 Enhancement: Default output is the skill folder itself
 
     Args:
         skill_path: Path to the skill folder
-        output_dir: Optional output directory for the .skill file (defaults to current directory)
+        output_dir: Optional output directory for the .skill file (defaults to skill folder)
         strict: If True, fail on any reference issues. If False, warn only.
 
     Returns:
@@ -136,23 +100,17 @@ def package_skill(skill_path, output_dir=None, strict=False):
         # Fallback if validator not available
         print(f"⚠️ Reference validation skipped (utility unavailable)\n")
 
-    # Determine output location (hybrid approach)
+    # Determine output location
     skill_name = skill_path.name
     if output_dir:
-        # Priority 1: User-specified output directory
+        # User-specified output directory
         output_path = Path(output_dir).resolve()
         output_path.mkdir(parents=True, exist_ok=True)
         print(f"📁 Output directory (user-specified): {output_path}")
     else:
-        # Priority 2: Check if parent directory is a valid project directory
-        parent_dir = skill_path.parent
-        if is_project_directory(parent_dir):
-            output_path = parent_dir
-            print(f"📁 Output directory (project directory detected): {output_path}")
-        else:
-            # Priority 3: Use current working directory
-            output_path = Path.cwd()
-            print(f"📁 Output directory (current working directory): {output_path}")
+        # Default: save inside the skill's own folder
+        output_path = skill_path
+        print(f"📁 Output directory (skill folder): {output_path}")
 
     skill_filename = output_path / f"{skill_name}.skill"
 
@@ -160,20 +118,22 @@ def package_skill(skill_path, output_dir=None, strict=False):
     try:
         print(f"\n📦 Creating archive: {skill_filename.name}")
         with zipfile.ZipFile(skill_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            # Walk through the skill directory
+            # Walk through the skill directory, excluding existing .skill files
             for file_path in skill_path.rglob('*'):
-                if file_path.is_file():
+                if file_path.is_file() and file_path.suffix != '.skill':
                     # Calculate the relative path within the zip
                     # Use skill_path (not skill_path.parent) to avoid wrapper folder
                     arcname = file_path.relative_to(skill_path)
                     zipf.write(file_path, arcname)
                     print(f"  Added: {arcname}")
 
-        print(f"\n✅ Successfully packaged skill to: {skill_filename}")
+        print(f"\n✅ Skill packaged at: {skill_filename.resolve()}")
+        print(f"💡 This .skill file can be used on claude.ai or any Claude platform that supports skills.")
         return skill_filename
 
     except Exception as e:
         print(f"❌ Error creating .skill file: {e}")
+        print(f"   Tip: Use output_dir argument to save to a different location.")
         return None
 
 
@@ -186,7 +146,7 @@ def main():
     )
     parser.add_argument('skill_path', help='Path to the skill folder')
     parser.add_argument('output_dir', nargs='?', default=None,
-                        help='Output directory for the .skill file (default: current directory)')
+                        help='Output directory for the .skill file (default: skill folder itself)')
     parser.add_argument('--strict', action='store_true',
                         help='Fail if any reference issues found (default: warn only)')
 
