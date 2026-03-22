@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.5.2] - 2026-03-22
+
+### Fixed
+- `section-2-fast-creation-workflow.md` and `section-2-full-creation-workflow.md`: add `decision_answer.json` format documentation to STEP 0 so agents know the required JSON structure when using Mode 1 of `decision_helper.py`
+
 ## [2.5.1] - 2026-03-21
 
 ### Fixed

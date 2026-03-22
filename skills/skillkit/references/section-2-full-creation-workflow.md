@@ -6,7 +6,37 @@
 
 ### STEP 0: Decide Approach
 
-**Tool:** `python scripts/decision_helper.py --analyze "description"`
+**Guide:** `knowledge/tools/18-decision-helper-guide.md`
+
+**Mode 1 (preferred) — Pre-answered questions (90-95% confidence):**
+
+```bash
+# Step 1: Create answers file with all 8 boolean fields
+cat > /tmp/decision-answers.json <<'EOF'
+{
+  "utility_task": false,
+  "multi_step": true,
+  "reusable": false,
+  "specialized_personality": false,
+  "missing_knowledge": false,
+  "coordination": false,
+  "isolated_context": false,
+  "clutter_chat": false
+}
+EOF
+
+# Step 2: Pass FILE PATH (not inline JSON) to --answers
+python scripts/decision_helper.py --answers /tmp/decision-answers.json
+```
+
+**Required JSON keys (all 8, must be boolean `true`/`false`):**
+`utility_task`, `multi_step`, `reusable`, `specialized_personality`, `missing_knowledge`, `coordination`, `isolated_context`, `clutter_chat`
+
+**Mode 2 (fallback) — Keyword inference (lower confidence):**
+
+```bash
+python scripts/decision_helper.py --analyze "description"
+```
 
 **Gates:**
 - IF "Skills" recommended -> PROCEED Step 1
