@@ -23,6 +23,7 @@ import os
 import re
 import sys
 import json
+import argparse
 import yaml
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -33,6 +34,242 @@ try:
     from utils.reference_validator import CrossReferenceValidator
 except ImportError:
     CrossReferenceValidator = None  # Graceful fallback
+
+
+# Security scanning classes (from security_scanner.py)
+class SecuritySeverity(Enum):
+    """Security finding severity levels."""
+    CRITICAL = 0
+    HIGH = 1
+    MEDIUM = 2
+    LOW = 3
+    INFO = 4
+
+
+@dataclass
+class SecurityFinding:
+    """Single security finding."""
+    severity: SecuritySeverity
+    finding_type: str
+    file: str
+    line: int
+    description: str
+    evidence: str
+    remediation: str
+
+
+class SecurityScanner:
+    """Integrated security vulnerability detection."""
+
+    def __init__(self, skill_path: str):
+        self.skill_path = Path(skill_path)
+        self.findings: list[SecurityFinding] = []
+
+    def _get_scannable_files(self) -> list[Path]:
+        """Get all files that should be scanned."""
+        extensions = ['.py', '.md', '.sh', '.yaml', '.yml']
+        files = []
+        for ext in extensions:
+            files.extend(self.skill_path.rglob(f'*{ext}'))
+        return files
+
+    def _get_python_files(self) -> list[Path]:
+        """Get all Python files."""
+        return list(self.skill_path.rglob('*.py'))
+
+    def scan_hardcoded_secrets(self) -> list[SecurityFinding]:
+        """Scan for hardcoded secrets."""
+        findings = []
+        secret_patterns = [
+            (r'api[_-]?key\s*=\s*["\'][\w\-]+["\']', 'API key'),
+            (r'password\s*=\s*["\'][^"\']+["\']', 'Password'),
+            (r'token\s*=\s*["\'][\w\-]+["\']', 'Token'),
+            (r'secret\s*=\s*["\'][\w\-]+["\']', 'Secret'),
+            (r'Authorization:\s*Bearer\s+[\w\-\.]+', 'Bearer token'),
+            (r'sk-[a-zA-Z0-9]{32,}', 'API key pattern'),
+        ]
+
+        for file_path in self._get_scannable_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, secret_type in secret_patterns:
+                for match in re.finditer(pattern, content, re.IGNORECASE):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=SecuritySeverity.CRITICAL,
+                        finding_type='Hardcoded Secret',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'{secret_type} detected in code',
+                        evidence=match.group(0)[:50] + '...',
+                        remediation='Use environment variables or secret management'
+                    ))
+        return findings
+
+    def scan_command_injection(self) -> list[SecurityFinding]:
+        """Scan for command injection vulnerabilities."""
+        findings = []
+        dangerous_patterns = [
+            (r'subprocess\.\w+\([^)]*shell\s*=\s*True', 'shell=True', SecuritySeverity.CRITICAL),
+            (r'os\.system\s*\(', 'os.system()', SecuritySeverity.CRITICAL),
+            (r'\beval\s*\(', 'eval()', SecuritySeverity.CRITICAL),
+            (r'\bexec\s*\(', 'exec()', SecuritySeverity.CRITICAL),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name, severity in dangerous_patterns:
+                for match in re.finditer(pattern, content):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=severity,
+                        finding_type='Command Injection Risk',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'Dangerous function: {name}',
+                        evidence=match.group(0),
+                        remediation='Use parameterized commands, avoid shell=True/eval/exec'
+                    ))
+        return findings
+
+    def scan_sql_injection(self) -> list[SecurityFinding]:
+        """Scan for SQL injection patterns."""
+        findings = []
+        sql_patterns = [
+            (r'(SELECT|INSERT|UPDATE|DELETE).*\+.*', 'string concatenation'),
+            (r'(SELECT|INSERT|UPDATE|DELETE).*f["\'].*\{', 'f-string formatting'),
+            (r'(SELECT|INSERT|UPDATE|DELETE).*\.format\(', '.format() usage'),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name in sql_patterns:
+                for match in re.finditer(pattern, content, re.IGNORECASE | re.MULTILINE):
+                    line_num = content[:match.start()].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=SecuritySeverity.HIGH,
+                        finding_type='SQL Injection Risk',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'SQL query with {name}',
+                        evidence=match.group(0)[:80],
+                        remediation='Use parameterized queries with placeholders (?)'
+                    ))
+        return findings
+
+    def scan_dangerous_imports(self) -> list[SecurityFinding]:
+        """Scan for dangerous library imports."""
+        findings = []
+        dangerous_imports = [
+            ('import pickle', 'pickle', SecuritySeverity.HIGH,
+             'Arbitrary code execution via deserialization. Use json instead.'),
+            ('from pickle', 'pickle', SecuritySeverity.HIGH,
+             'Arbitrary code execution via deserialization. Use json instead.'),
+            ('yaml.load(', 'yaml.load()', SecuritySeverity.HIGH,
+             'Unsafe YAML loading. Use yaml.safe_load() instead.'),
+        ]
+
+        for file_path in self._get_python_files():
+            content = file_path.read_text(encoding='utf-8', errors='ignore')
+            for pattern, name, severity, remediation in dangerous_imports:
+                if pattern in content:
+                    line_num = content.split(pattern)[0].count('\n') + 1
+                    findings.append(SecurityFinding(
+                        severity=severity,
+                        finding_type='Dangerous Import',
+                        file=str(file_path.relative_to(self.skill_path)),
+                        line=line_num,
+                        description=f'Risky library: {name}',
+                        evidence=pattern,
+                        remediation=remediation
+                    ))
+        return findings
+
+    def run_all_scans(self) -> list[SecurityFinding]:
+        """Run all security scans."""
+        self.findings = []
+        self.findings.extend(self.scan_hardcoded_secrets())
+        self.findings.extend(self.scan_command_injection())
+        self.findings.extend(self.scan_sql_injection())
+        self.findings.extend(self.scan_dangerous_imports())
+        return self.findings
+
+
+@dataclass
+class CostBreakdown:
+    """Token and cost breakdown for a usage scenario."""
+    scenario: str
+    tokens: int
+    cost_per_use: float
+    monthly_cost: float
+
+
+class TokenAnalyzer:
+    """Token cost estimation and progressive disclosure analysis."""
+
+    PRICING = {
+        'claude-sonnet-4-6': {'input': 3.00, 'output': 15.00},
+        'claude-opus-4-6': {'input': 15.00, 'output': 75.00}
+    }
+
+    def __init__(self, skill_path: str, model: str = 'claude-sonnet-4-6'):
+        self.skill_path = Path(skill_path)
+        self.model = model
+        self.pricing = self.PRICING.get(model, self.PRICING['claude-sonnet-4-6'])
+
+    def count_tokens(self, text: str) -> int:
+        """Estimate token count using averaged method."""
+        words = len(text.split())
+        chars = len(text)
+        token_by_words = int(words * 1.3)
+        token_by_chars = int(chars / 4)
+        return int((token_by_words + token_by_chars) / 2)
+
+    def analyze_progressive_disclosure(self) -> dict:
+        """Analyze skill using 3-level progressive disclosure model."""
+        breakdown = {
+            'level_1_metadata': 0,
+            'level_2_skill_body': 0,
+            'level_3_references': {},
+        }
+
+        skill_md = self.skill_path / 'SKILL.md'
+        if skill_md.exists():
+            content = skill_md.read_text(encoding='utf-8')
+            # Level 1: Metadata (frontmatter)
+            if content.startswith('---'):
+                parts = content.split('---', 2)
+                if len(parts) >= 3:
+                    breakdown['level_1_metadata'] = self.count_tokens(parts[1])
+                    breakdown['level_2_skill_body'] = self.count_tokens(parts[2])
+            else:
+                breakdown['level_2_skill_body'] = self.count_tokens(content)
+
+        # Level 3: References
+        refs_dir = self.skill_path / 'references'
+        if refs_dir.exists():
+            for ref_file in refs_dir.glob('*.md'):
+                content = ref_file.read_text(encoding='utf-8')
+                breakdown['level_3_references'][ref_file.name] = self.count_tokens(content)
+
+        return breakdown
+
+    def estimate_usage_scenarios(self, breakdown: dict) -> dict[str, int]:
+        """Calculate token usage for different scenarios."""
+        scenarios = {
+            'idle': breakdown['level_1_metadata'],
+            'typical': breakdown['level_1_metadata'] + breakdown['level_2_skill_body'],
+        }
+
+        if breakdown['level_3_references']:
+            smallest_ref = min(breakdown['level_3_references'].values())
+            scenarios['with_reference'] = scenarios['typical'] + smallest_ref
+            total_refs = sum(breakdown['level_3_references'].values())
+            scenarios['worst_case'] = scenarios['typical'] + total_refs
+        else:
+            scenarios['with_reference'] = scenarios['typical']
+            scenarios['worst_case'] = scenarios['typical']
+
+        return scenarios
 
 
 class Severity(Enum):
