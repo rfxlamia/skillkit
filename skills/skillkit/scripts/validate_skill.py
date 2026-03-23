@@ -789,10 +789,89 @@ class SkillValidator:
         return 0  # All passed
 
 
+def _format_json_results(results: dict) -> dict:
+    """Format results as JSON."""
+    output = {'status': 'success', 'validations': {}}
+
+    if 'structure' in results:
+        output['validations']['structure'] = {
+            'checks': [
+                {
+                    'name': r.check_name,
+                    'severity': r.severity.value,
+                    'message': r.message,
+                    'suggestion': r.suggestion
+                }
+                for r in results['structure']['results']
+            ],
+            'passed': sum(1 for r in results['structure']['results'] if r.severity == Severity.PASS),
+            'warnings': sum(1 for r in results['structure']['results'] if r.severity == Severity.WARNING),
+            'failed': sum(1 for r in results['structure']['results'] if r.severity == Severity.FAIL)
+        }
+
+    if 'security' in results:
+        output['validations']['security'] = {
+            'findings': [
+                {
+                    'severity': f.severity.name,
+                    'type': f.finding_type,
+                    'file': f.file,
+                    'line': f.line,
+                    'description': f.description,
+                    'remediation': f.remediation
+                }
+                for f in results['security']['findings']
+            ],
+            'critical_count': results['security']['critical'],
+            'high_count': results['security']['high']
+        }
+
+    if 'tokens' in results:
+        output['validations']['tokens'] = {
+            'breakdown': results['tokens']['breakdown'],
+            'scenarios': results['tokens']['scenarios']
+        }
+
+    return output
+
+
+def _format_text_results(results: dict) -> str:
+    """Format results as human-readable text."""
+    lines = []
+    lines.append('=' * 60)
+    lines.append('Skill Validation Report')
+    lines.append('=' * 60)
+
+    if 'structure' in results:
+        lines.append('\n--- Structure Validation ---')
+        for r in results['structure']['results']:
+            icon = 'PASS' if r.severity == Severity.PASS else 'WARN' if r.severity == Severity.WARNING else 'FAIL'
+            lines.append(f"[{icon}] {r.check_name}: {r.message}")
+            if r.suggestion:
+                lines.append(f"      -> {r.suggestion}")
+
+    if 'security' in results:
+        lines.append('\n--- Security Scan ---')
+        findings = results['security']['findings']
+        if not findings:
+            lines.append('No security issues found.')
+        else:
+            for f in findings:
+                lines.append(f"[{f.severity.name}] {f.finding_type} in {f.file}:{f.line}")
+                lines.append(f"      {f.description}")
+                lines.append(f"      Fix: {f.remediation}")
+
+    if 'tokens' in results:
+        lines.append('\n--- Token Analysis ---')
+        scenarios = results['tokens']['scenarios']
+        for name, tokens in scenarios.items():
+            lines.append(f"  {name}: {tokens} tokens")
+
+    return '\n'.join(lines)
+
+
 def main():
     """CLI entry point."""
-    import argparse
-    
     parser = argparse.ArgumentParser(
         description='Comprehensive skill validation tool',
         epilog='References: Files 02, 07, 10, 12 for validation rules'
@@ -802,29 +881,82 @@ def main():
                         help='Treat warnings as failures')
     parser.add_argument('--format', choices=['text', 'json'], default='text',
                         help='Output format (default: text)')
-    
+    # NEW FLAGS
+    parser.add_argument('--security-only', action='store_true',
+                        help='Run only security scan')
+    parser.add_argument('--tokens-only', action='store_true',
+                        help='Run only token analysis')
+    parser.add_argument('--structure-only', action='store_true',
+                        help='Run only structure validation')
+
     args = parser.parse_args()
-    
+
     # Validate skill path
     skill_path = Path(args.skill_path)
     if not skill_path.exists():
         print(f"Error: Skill path '{skill_path}' does not exist", file=sys.stderr)
         sys.exit(2)
-    
+
     if not skill_path.is_dir():
         print(f"Error: '{skill_path}' is not a directory", file=sys.stderr)
         sys.exit(2)
-    
-    # Run validation
-    validator = SkillValidator(skill_path, strict=args.strict)
-    validator.run_all_validations()
-    
-    # Generate report
-    report = validator.generate_report(format=args.format)
-    print(report)
-    
-    # Exit with appropriate code
-    sys.exit(validator.get_exit_code())
+
+    # Determine which validations to run
+    # If no specific flags, run all (default behavior)
+    if not any([args.security_only, args.tokens_only, args.structure_only]):
+        run_structure = run_security = run_tokens = True
+    else:
+        # Support combining flags (e.g., --security-only --structure-only)
+        run_structure = args.structure_only or not (args.security_only or args.tokens_only)
+        run_security = args.security_only or not (args.structure_only or args.tokens_only)
+        run_tokens = args.tokens_only or not (args.structure_only or args.security_only)
+
+    results = {}
+    exit_code = 0
+
+    # Run structure validation
+    if run_structure:
+        validator = SkillValidator(skill_path, strict=args.strict)
+        validator.run_all_validations()
+        results['structure'] = {
+            'results': validator.results,
+            'exit_code': validator.get_exit_code()
+        }
+        exit_code = max(exit_code, validator.get_exit_code())
+
+    # Run security scan
+    if run_security:
+        scanner = SecurityScanner(str(skill_path))
+        findings = scanner.run_all_scans()
+        critical_count = sum(1 for f in findings if f.severity == SecuritySeverity.CRITICAL)
+        high_count = sum(1 for f in findings if f.severity == SecuritySeverity.HIGH)
+        results['security'] = {
+            'findings': findings,
+            'critical': critical_count,
+            'high': high_count
+        }
+        if critical_count > 0:
+            exit_code = max(exit_code, 2)
+        elif high_count > 0:
+            exit_code = max(exit_code, 1)
+
+    # Run token analysis
+    if run_tokens:
+        analyzer = TokenAnalyzer(str(skill_path))
+        breakdown = analyzer.analyze_progressive_disclosure()
+        scenarios = analyzer.estimate_usage_scenarios(breakdown)
+        results['tokens'] = {
+            'breakdown': breakdown,
+            'scenarios': scenarios
+        }
+
+    # Output results
+    if args.format == 'json':
+        print(json.dumps(_format_json_results(results), indent=2))
+    else:
+        print(_format_text_results(results))
+
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':
