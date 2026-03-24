@@ -108,13 +108,14 @@ class TestDeprecatedInitScripts:
 
     def test_init_subagent_deprecated(self):
         """Verify init_subagent.py prints deprecation and exits 1."""
-        result = subprocess.run(
-            [sys.executable, str(SCRIPTS_DIR / 'init_subagent.py'), 'test', '--path', '/tmp'],
-            capture_output=True, text=True
-        )
-        assert result.returncode == 1
-        assert 'DEPRECATED' in result.stderr
-        assert 'init.py subagent' in result.stderr
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = subprocess.run(
+                [sys.executable, str(SCRIPTS_DIR / 'init_subagent.py'), 'test', '--path', tmpdir],
+                capture_output=True, text=True
+            )
+            assert result.returncode == 1
+            assert 'DEPRECATED' in result.stderr
+            assert 'init.py subagent' in result.stderr
 
 
 class TestValidateConsolidation:
@@ -280,7 +281,7 @@ class TestFeatureParity:
         with tempfile.TemporaryDirectory() as tmpdir:
             skill_dir = Path(tmpdir) / 'test'
             skill_dir.mkdir()
-            skill_dir.joinpath('SKILL.md').write_text('name: test\n---\n# Test')
+            skill_dir.joinpath('SKILL.md').write_text('---\nname: test\n---\n# Test')
 
             scripts_dir = skill_dir / 'scripts'
             scripts_dir.mkdir()

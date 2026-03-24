@@ -154,6 +154,9 @@ def title_case_skill_name(skill_name):
 
 def validate_skill_name(name: str) -> tuple[bool, str]:
     """Validate skill/subagent name format."""
+    if not name or not name.strip():
+        return False, "Name cannot be empty or whitespace"
+    name = name.strip()
     if len(name) > 40:
         return False, "Name must be 40 characters or less"
     if not all(c.islower() or c.isdigit() or c == '-' for c in name):

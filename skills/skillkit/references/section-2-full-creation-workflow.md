@@ -159,7 +159,7 @@ AFTER user approves proposal (Step 1e):
 
 **Options:**
 A. `python scripts/migration_helper.py doc.md --format json` (if doc exists)
-B. `python scripts/init.py skill skill-name --path /home/claude` (Anthropic standard)
+B. `python scripts/init.py skill skill-name --path /home/claude --mode full` (Anthropic standard)
 C. Manual folder creation
 
 **Guide:** `knowledge/tools/22-migration-helper.md`
