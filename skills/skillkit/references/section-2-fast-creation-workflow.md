@@ -119,6 +119,7 @@ Runs structure validation + security scan + token analysis in one call. No flags
 (`--security-only` and `--tokens-only` flags are for Section 7 individual tool use only.)
 
 **Gates:**
+- Structure PASS (no failures, no warnings) → PROCEED Step 6
 - Structure failures → FIX, re-run
 - Structure warnings only → REVIEW with user, PROCEED Step 6
 - Security CRITICAL findings → FIX immediately, re-run

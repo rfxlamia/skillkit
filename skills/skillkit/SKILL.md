@@ -52,7 +52,7 @@ Detect or prompt for workflow mode before running the creation flow.
 
 No implicit default mode is allowed when mode is not explicitly known.
 
-### Workflow A: Fast Mode (12 Steps)
+### Workflow A: Fast Mode (10 Steps)
 
 Use when `.skillkit-mode` contains `fast` or marker does not exist.
 
@@ -79,7 +79,7 @@ Phase 4: Packaging
 - Step 8: Quality assessment (`quality_scorer.py`)
 - Step 9: Package (`package_skill.py`)
 
-### Workflow B: Full Mode (16 Steps)
+### Workflow B: Full Mode (14 Steps)
 
 Use when `.skillkit-mode` contains `full`.
 
@@ -230,7 +230,7 @@ Priority order:
 1. Decision check (Step 0)
 2. Migration analysis (migration_helper.py)
 3. Structure creation
-4. Execute validation steps (3-8)
+4. Execute validation steps (5-8)
 5. Package (Step 9)
 
 **Stop Condition (Mandatory):**

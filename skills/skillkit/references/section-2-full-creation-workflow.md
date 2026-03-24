@@ -26,7 +26,7 @@ cat > /tmp/decision-answers.json <<'EOF'
 EOF
 
 # Step 2: Pass FILE PATH (not inline JSON) to --answers
-python scripts/decision_helper.py --answers /tmp/decision-answers.json
+python3 scripts/decision_helper.py --answers /tmp/decision-answers.json
 ```
 
 **Required JSON keys (all 8, must be boolean `true`/`false`):**
@@ -35,7 +35,7 @@ python scripts/decision_helper.py --answers /tmp/decision-answers.json
 **Mode 2 (fallback) — Keyword inference (lower confidence):**
 
 ```bash
-python scripts/decision_helper.py --analyze "description"
+python3 scripts/decision_helper.py --analyze "description"
 ```
 
 **Gates:**
@@ -158,8 +158,8 @@ AFTER user approves proposal (Step 1e):
 ### STEP 2: Initialize & Create Content
 
 **Options:**
-A. `python scripts/migration_helper.py doc.md --format json` (if doc exists)
-B. `python scripts/init.py skill skill-name --path /home/claude --mode full` (Anthropic standard)
+A. `python3 scripts/migration_helper.py doc.md --format json` (if doc exists)
+B. `python3 scripts/init.py skill skill-name --path /home/claude --mode full` (Anthropic standard)
 C. Manual folder creation
 
 **Guide:** `knowledge/tools/22-migration-helper.md`
@@ -295,12 +295,13 @@ BEFORE running validate_skill.py (Step 3):
 
 ### STEP 3: Validate Skill
 
-**Tool:** `python scripts/validate_skill.py skill-name/ --format json`
+**Tool:** `python3 scripts/validate_skill.py skill-name/ --format json`
 
 Runs structure validation + security scan + token analysis in one call. No flags needed for workflow use.
 (`--security-only` and `--tokens-only` flags are for Section 7 individual tool use only.)
 
 **Gates:**
+- Structure PASS (no failures, no warnings) → PROCEED Step 4
 - Structure failures → FIX, re-run
 - Structure warnings only → REVIEW with user, PROCEED Step 4
 - Security CRITICAL findings → FIX immediately, re-run
@@ -313,7 +314,7 @@ Runs structure validation + security scan + token analysis in one call. No flags
 
 ### STEP 4: Progressive Disclosure
 
-**Tool:** `python scripts/split_skill.py skill-name/ --format json`
+**Tool:** `python3 scripts/split_skill.py skill-name/ --format json`
 
 ```
 IF >350 lines -> SPLIT to references/
@@ -325,7 +326,7 @@ IF <200 -> CHECK if minimal
 
 ### STEP 5: Tests
 
-**Tool:** `python scripts/test_generator.py skill-name/ --format json`
+**Tool:** `python3 scripts/test_generator.py skill-name/ --format json`
 
 Generates automated tests for validation.
 
@@ -333,7 +334,7 @@ Generates automated tests for validation.
 
 ### STEP 6: Quality
 
-**Tool:** `python scripts/quality_scorer.py skill-name/ --format json`
+**Tool:** `python3 scripts/quality_scorer.py skill-name/ --format json`
 
 **Gates:**
 - >=9.0 -> PROCEED Step 7
@@ -346,7 +347,7 @@ Generates automated tests for validation.
 
 ### STEP 7: Package
 
-**Tool:** `python scripts/package_skill.py skill-name/` (Anthropic)
+**Tool:** `python3 scripts/package_skill.py skill-name/` (Anthropic)
 
 **Checklist:** Validation, security, tokens, disclosure, quality >=7.5
 
@@ -427,7 +428,7 @@ Generates automated tests for validation.
    | sunk_cost     | FAIL          | PASS          | ✅     |
    | exhaustion    | FAIL          | FAIL          | ❌ gap |
 
-5. IF any ❌ → go back to Step 6, add explicit counter for that rationalization
+5. IF any ❌ → return to content creation (SKILL.md Step 6), add explicit counter for that rationalization
    IF all ✅ → proceed to Step 9
 ```
 
@@ -458,9 +459,9 @@ Generates automated tests for validation.
    a. Document it verbatim
    b. Add explicit counter to SKILL.md (e.g., entry in rationalization table or red flags list)
    c. REPEAT Step 7 for the updated skill
-   d. REPEAT Step 12 until no new rationalizations found
+   d. REPEAT Step 10 until no new rationalizations found
 
-5. DONE when: two consecutive Step 12 runs produce no new rationalizations
+5. DONE when: two consecutive Step 10 runs produce no new rationalizations
 ```
 
 **Gate:** Two consecutive runs with no new rationalizations before proceeding to Step 11 (close loopholes).
