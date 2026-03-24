@@ -1,6 +1,6 @@
 {
   "name": "@rfxlamia/skillkit",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Interactive CLI installer for SkillKit — Claude Code skills & agents",
   "type": "module",
   "bin": {
@@ -14,7 +14,7 @@
     "agents/"
   ],
   "scripts": {
-    "prepublishOnly": "node ../scripts/generate-manifest.js && cp -r ../skills ./skills && cp -r ../agents ./agents",
+    "prepublishOnly": "node ../scripts/generate-manifest.js && npm run clean-assets && cp -r ../skills ./skills && cp -r ../agents ./agents",
     "postpublish": "npm run clean-assets",
     "clean-assets": "rm -rf ./skills ./agents 2>/dev/null; true",
     "test": "node --test src/**/*.test.js"
