@@ -1,7 +1,7 @@
 {
   "name": "@rfxlamia/skillkit",
   "version": "2.0.0",
-  "description": "Interactive CLI installer for SkillKit — Claude Code skills & agents",
+  "description": "Interactive CLI installer for SkillKit — core skills for AI coding agents",
   "type": "module",
   "bin": {
     "skillkit": "./bin/skillkit.js"

@@ -14,13 +14,13 @@ function createTempDir() {
   return mkdtempSync(join(tmpdir(), 'skillkit-test-'))
 }
 
-function makeTarget(skillsDir, agentsDir, name = 'Test Tool') {
-  return { name, scope: 'user', skillsDir, agentsDir }
+function makeTarget(skillsDir, name = 'Test Tool') {
+  return { name, scope: 'user', skillsDir }
 }
 
 test('installSelected validates skills is an array', async () => {
   await assert.rejects(
-    installSelected({ skills: 'not-array', agents: [] }, [makeTarget('/tmp', '/tmp')]),
+    installSelected({ skills: 'not-array', agents: [] }, [makeTarget('/tmp')]),
     /skills must be an array/
   )
 })
@@ -34,18 +34,16 @@ test('installSelected validates targets is an array', async () => {
 
 test('installSelected skips invalid skill objects', async () => {
   const skillsDir = createTempDir()
-  const agentsDir = createTempDir()
 
   const { totalInstalled, results } = await installSelected(
     { skills: [{ name: null }, { name: 'valid', path: 'skills/valid' }], agents: [] },
-    [makeTarget(skillsDir, agentsDir)]
+    [makeTarget(skillsDir)]
   )
 
   assert.strictEqual(totalInstalled, 0)
   assert.strictEqual(results[0].skipped.length, 2)
 
   rmSync(skillsDir, { recursive: true })
-  rmSync(agentsDir, { recursive: true })
 })
 
 test('installSelected returns results per target', async () => {
@@ -54,7 +52,7 @@ test('installSelected returns results per target', async () => {
 
   const { results, totalInstalled } = await installSelected(
     { skills: [], agents: [] },
-    [makeTarget(dir1, null, 'Tool A'), makeTarget(dir2, null, 'Tool B')]
+    [makeTarget(dir1, 'Tool A'), makeTarget(dir2, 'Tool B')]
   )
 
   assert.strictEqual(results.length, 2)
@@ -66,18 +64,7 @@ test('installSelected returns results per target', async () => {
   rmSync(dir2, { recursive: true })
 })
 
-test('installSelected skips agents when agentsDir is null', async () => {
-  const skillsDir = createTempDir()
 
-  const { results } = await installSelected(
-    { skills: [], agents: [{ name: 'test-agent', path: 'agents/test-agent.md' }] },
-    [makeTarget(skillsDir, null)]
-  )
-
-  assert.strictEqual(results[0].target.agentsDir, null)
-
-  rmSync(skillsDir, { recursive: true })
-})
 
 test('installSelected copies skill directory to destination (happy path)', async () => {
   // Create a source skill directory inside PACKAGE_ROOT (same as install.js uses)
@@ -89,7 +76,7 @@ test('installSelected copies skill directory to destination (happy path)', async
 
   const { totalInstalled, results } = await installSelected(
     { skills: [{ name: 'my-test-skill', path: '.test-fixture/my-test-skill' }], agents: [] },
-    [makeTarget(destDir, null)]
+    [makeTarget(destDir)]
   )
 
   assert.strictEqual(totalInstalled, 1)
